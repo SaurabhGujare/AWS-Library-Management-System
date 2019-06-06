@@ -3,9 +3,9 @@
 ## Team Information
 
 | Name | NEU ID | Email Address |
-| --- | --- | --- |
-| | | |
-| | | |
+| Naqiyah Lakdawala	 | 001449938	 | lakdawala.n@husky.neu.edu |
+| Saurabh Gujare         |               | gujare.s@husky.neu.edu |
+| Gaurao Thakur		 |               | thakur.g@husky.neu.edu |
 | | | |
 | | | |
 
