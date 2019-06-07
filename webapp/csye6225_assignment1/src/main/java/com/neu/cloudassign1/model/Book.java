@@ -2,15 +2,15 @@ package com.neu.cloudassign1.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 @Entity
 @Table(name="book")
 public class Book {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id", unique = true, nullable = false)
-    private long id;
+    @GeneratedValue
+    private UUID id;
 
     @Column(name="title")
     @NotNull(message="is required")
@@ -32,19 +32,18 @@ public class Book {
 
     }
 
-    public Book(long id, String title,  String author,  String isbn,  int quantity) {
-        this.id = id;
+    public Book(@NotNull(message = "is required") String title, @NotNull(message = "is required") String author, @NotNull(message = "is required") String isbn, @NotNull(message = "is required") int quantity) {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
         this.quantity = quantity;
     }
 
-    public long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
