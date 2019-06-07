@@ -11,10 +11,8 @@
 
 ## Technology Stack
 
-
-## Build Instructions
-
-
+## Build Instructions 
+Run cloudApplication.java
 ## Deploy Instructions
 
 
