@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import com.neu.cloudassign1.exception.UserException;
 import com.neu.cloudassign1.model.User;
-
+import java.util.UUID;
 
 
 
@@ -37,6 +37,7 @@ public class UserDAO {
 	public void saveUser(User user) throws UserException {
 		try {
 			Session currentSession = entityManager.unwrap(Session.class);
+			user.setId(UUID.randomUUID().toString());
 			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 			currentSession.save(user);
 			

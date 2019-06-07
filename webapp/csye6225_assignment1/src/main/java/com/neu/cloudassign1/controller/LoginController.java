@@ -65,7 +65,7 @@ public class LoginController {
             return new ResponseEntity("User Already Exists", HttpStatus.FORBIDDEN);
         }
         try {
-        	userDao.saveUser(user);
+            userDao.saveUser(user);
             return new ResponseEntity("User Successfully Registered", HttpStatus.OK);
         }catch(ConstraintViolationException ce) {
         	return new ResponseEntity("Invalid Email Address",HttpStatus.FORBIDDEN);

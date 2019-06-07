@@ -14,7 +14,6 @@ import javax.validation.constraints.Pattern;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="Id", unique = true, nullable = false)
     private long id;
 
@@ -30,11 +29,11 @@ public class User {
     public User(){}
 
     public User(long id, String email, String password) {
+
         this.id = id;
         this.email = email;
         this.password = password;
     }
-
     public long getId() {
         return id;
     }
