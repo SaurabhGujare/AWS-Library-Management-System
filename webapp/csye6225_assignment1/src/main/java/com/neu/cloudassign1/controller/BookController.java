@@ -40,6 +40,8 @@ public class BookController {
         bookMap.clear();
         bookMap.put("successMessage","Book registered successfully");
         return new ResponseEntity(bookMap, HttpStatus.OK);
+
+
     }
 
     @RequestMapping(value = "/book", method = RequestMethod.GET)

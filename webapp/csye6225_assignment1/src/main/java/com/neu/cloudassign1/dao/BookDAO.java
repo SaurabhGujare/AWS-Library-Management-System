@@ -29,6 +29,7 @@ public class BookDAO {
         Session currentSession = entityManager.unwrap(Session.class);
 
         currentSession.saveOrUpdate(b);
+
     }
 
     @Transactional
