@@ -37,10 +37,9 @@ public class UserDAO {
 	public void saveUser(User user) throws UserException {
 		try {
 			Session currentSession = entityManager.unwrap(Session.class);
-			user.setId(UUID.randomUUID().toString());
 			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 			currentSession.save(user);
-			
+
 		}catch(ConstraintViolationException ce) {
 			throw ce;
 		}catch(Exception e) {
