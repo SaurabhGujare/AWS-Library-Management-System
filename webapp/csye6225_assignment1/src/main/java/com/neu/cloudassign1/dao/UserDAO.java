@@ -57,6 +57,7 @@ public class UserDAO {
 		List<User> list = theQuery.getResultList();
 		if(list.isEmpty())
 			return false;
+
 		
 		return true ;
 

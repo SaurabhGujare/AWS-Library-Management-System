@@ -1,6 +1,7 @@
 package com.neu.cloudassign1.dao;
 
 
+import com.neu.cloudassign1.exception.BookException;
 import com.neu.cloudassign1.model.Book;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +83,8 @@ public class BookDAO {
                 bb.setId(b.getId());
                 bb.setTitle(b.getTitle());
                 bb.setAuthor(b.getAuthor());
+                bb.setIsbn(b.getIsbn());
+                bb.setQuantity(b.getQuantity());
             }
         }
 
@@ -102,4 +105,25 @@ public class BookDAO {
         theQuery.executeUpdate();
     }
 
+    @Transactional
+    public void updateBook(Book bookToUpdate, Book book) throws BookException{
+        try {
+            System.out.println("Inside UpdateDao");
+            System.out.println("BookToUpdate "+bookToUpdate);
+            System.out.println("BookData "+book);
+            Session currentSession = entityManager.unwrap(Session.class);
+            Query theQuery = currentSession.createQuery("UPDATE Book set " +
+                    "title=:title, author=:author, isbn=:isbn, quantity =:quantity WHERE title =:titleCrit");
+            theQuery.setParameter("author", book.getAuthor());
+            theQuery.setParameter("isbn", book.getIsbn());
+            theQuery.setParameter("title", book.getTitle());
+            theQuery.setParameter("quantity", book.getQuantity());
+            theQuery.setParameter("titleCrit",bookToUpdate.getTitle());
+            System.out.println("\n\n\nRows Updated "+theQuery.executeUpdate());
+
+        }catch(Exception e){
+            throw new BookException("Unable to update the book "+e.getMessage());
+        }
+
+    }
 }

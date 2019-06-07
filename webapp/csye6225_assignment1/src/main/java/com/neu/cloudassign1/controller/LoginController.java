@@ -2,6 +2,8 @@ package com.neu.cloudassign1.controller;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
@@ -45,30 +47,30 @@ public class LoginController {
         webDataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
-    @RequestMapping(value= "/hello" , method = RequestMethod.GET, produces = "application/json")
-    @ResponseBody
-    public String sayHello() {
-    	return "Hello World";
-    }
-    
-	@RequestMapping(value= "/" , method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody String loginUser() {
-
-            return  java.time.LocalDate.now().toString()+" "+java.time.LocalTime.now().toString();
+	@RequestMapping(value= "/" , method = RequestMethod.GET)
+    public ResponseEntity loginUser() {
+        Map<String,String> timeMap= new HashMap<String,String>();
+        timeMap.put("date",java.time.LocalDate.now().toString());
+        timeMap.put("time",java.time.LocalTime.now().toString());
+        return new ResponseEntity(timeMap,HttpStatus.OK);
 
     }
 	
-	@RequestMapping(value= "/user/register" , method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity registerNewUser(@RequestBody User user) throws UserException {
+	@RequestMapping(value= "/user/register" , method = RequestMethod.POST, produces="application/json")
+    public ResponseEntity<String> registerNewUser(@RequestBody User user) throws UserException {
+        Map<String,String> messageMap= new HashMap<String,String>();
         if(userDao.isUser(user.getEmail())){
         	System.out.println("\n\n\n**** 1 *****\n\n\n");
-            return new ResponseEntity("User Already Exists", HttpStatus.FORBIDDEN);
+            messageMap.put("errorMessage","User Already Exists");
+            return new ResponseEntity(messageMap, HttpStatus.FORBIDDEN);
         }
         try {
             userDao.saveUser(user);
-            return new ResponseEntity("User Successfully Registered", HttpStatus.OK);
+            messageMap.put("successMessage","User Successfully Registered");
+            return new ResponseEntity(messageMap, HttpStatus.OK);
         }catch(ConstraintViolationException ce) {
-        	return new ResponseEntity("Invalid Email Address",HttpStatus.FORBIDDEN);
+            messageMap.put("errorMessage","Invalid Email Address");
+        	return new ResponseEntity(messageMap,HttpStatus.FORBIDDEN);
         }
         
     }

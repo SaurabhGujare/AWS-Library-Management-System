@@ -14,6 +14,7 @@ import javax.validation.constraints.Pattern;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="Id", unique = true, nullable = false)
     private long id;
 
