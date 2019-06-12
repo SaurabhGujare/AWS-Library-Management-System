@@ -65,12 +65,6 @@ public class BookDAO {
     @Transactional
     public Book getBookById(String id) {
 
-/*		Session currentSession = entityManager.unwrap(Session.class);
-
-		Book book = currentSession.get(Book.class, id);
-
-		return book;*/
-
         Session currentSession = entityManager.unwrap(Session.class);
 
         Query theQuery = currentSession.createQuery("FROM Book");
@@ -107,24 +101,24 @@ public class BookDAO {
     }
 
     @Transactional
-    public void updateBook(Book bookToUpdate, Book book) throws BookException{
-        try {
-            System.out.println("Inside UpdateDao");
-            System.out.println("BookToUpdate "+bookToUpdate);
-            System.out.println("BookData "+book);
-            Session currentSession = entityManager.unwrap(Session.class);
-            Query theQuery = currentSession.createQuery("UPDATE Book set " +
-                    "title=:title, author=:author, isbn=:isbn, quantity =:quantity WHERE title =:titleCrit");
-            theQuery.setParameter("author", book.getAuthor());
-            theQuery.setParameter("isbn", book.getIsbn());
-            theQuery.setParameter("title", book.getTitle());
-            theQuery.setParameter("quantity", book.getQuantity());
-            theQuery.setParameter("titleCrit",bookToUpdate.getTitle());
-            System.out.println("\n\n\nRows Updated "+theQuery.executeUpdate());
+    public void updateBook(Book bookToUpdate, Book book) throws Exception {
+    try {
+        System.out.println("Inside UpdateDao");
+        System.out.println("BookToUpdate " + bookToUpdate);
+        System.out.println("BookData " + book);
+        Session currentSession = entityManager.unwrap(Session.class);
+        Query theQuery = currentSession.createQuery("UPDATE Book set " +
+                "title=:title, author=:author, isbn=:isbn, quantity =:quantity WHERE title =:titleCrit");
+        theQuery.setParameter("author", book.getAuthor());
+        theQuery.setParameter("isbn", book.getIsbn());
+        theQuery.setParameter("title", book.getTitle());
+        theQuery.setParameter("quantity", book.getQuantity());
+        theQuery.setParameter("titleCrit", bookToUpdate.getTitle());
+        System.out.println("\n\n\nRows Updated " + theQuery.executeUpdate());
+    } catch(Exception e){
+        throw new Exception();
+    }
 
-        }catch(Exception e){
-            throw new BookException("Unable to update the book "+e.getMessage());
-        }
 
     }
 }
