@@ -65,6 +65,10 @@ public class LoginController {
             return new ResponseEntity(messageMap, HttpStatus.FORBIDDEN);
         }
         try {
+            if(user.getPassword().length()<8){
+                messageMap.put("errrorMessage","Password must me atleast 8 character long");
+                return new ResponseEntity(messageMap, HttpStatus.FORBIDDEN);
+            }
             userDao.saveUser(user);
             messageMap.put("successMessage","User Successfully Registered");
             return new ResponseEntity(messageMap, HttpStatus.OK);
