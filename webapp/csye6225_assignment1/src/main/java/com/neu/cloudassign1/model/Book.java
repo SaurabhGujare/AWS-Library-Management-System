@@ -9,7 +9,7 @@ import java.util.UUID;
 public class Book {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "UUID")
     private UUID id;
 
     @Column(name="title")
