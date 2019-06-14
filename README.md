@@ -23,11 +23,13 @@
 2. Create a MySQL database with name csyeassign1
 3. Open the project in Intellij
 4. Run the CloudAssign1Application file as a Java Application
+5. To run the bash files for cloudformation run  for creation of a stack : "./ csye6225-aws-cf-create-stack.sh <Stack-      name> <Available-Zone-1> <Available-Zone-2 <Available-Zone-3>
+6. For Termination "./ csye6225-aws-cf-terminate-stack.sh <Stack-name>" in the cloudformation folder.
+7. To run the aws-cli scripts For creation of VPC run "./ csye6225-aws-networking-setup.sh <CIDR>  <aws-region-code> <subnet-1-name> <subnet-2-name> <subnet-3-name> <Available-Zone-1> <Available-Zone-2> <Available-Zone-3>"
+8. To run the aws-cli scripts for TearDown of VPC run "./ csye6225-aws-networking-taerdown.sh {VPC-ID}"
 
 ## Running Tests
 1. testShowBook() function returns all the books
 2. testCreateBook() fucntion tests the creattion of the particular book
 
 ## CI/CD
-
-

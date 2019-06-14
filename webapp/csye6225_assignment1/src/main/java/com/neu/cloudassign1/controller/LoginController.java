@@ -1,41 +1,28 @@
 package com.neu.cloudassign1.controller;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolationException;
-
+import com.neu.cloudassign1.exception.UserException;
+import com.neu.cloudassign1.model.User;
+import com.neu.cloudassign1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.neu.cloudassign1.dao.UserDAO;
-import com.neu.cloudassign1.exception.UserException;
-import com.neu.cloudassign1.model.User;
-
+import javax.validation.ConstraintViolationException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
 public class LoginController {
-	
-	
-	private UserDAO userDao;
-	
+
+	private UserService userService;
+
 	@Autowired
-	public LoginController(UserDAO userDao) {
-		this.userDao = userDao;
+	public LoginController(UserService userService) {
+		this.userService = userService;
 	}
 	
 	/**
@@ -59,7 +46,7 @@ public class LoginController {
 	@RequestMapping(value= "/user/register" , method = RequestMethod.POST, produces="application/json")
     public ResponseEntity<String> registerNewUser(@RequestBody User user) throws UserException {
         Map<String,String> messageMap= new HashMap<String,String>();
-        if(userDao.isUser(user.getEmail())){
+        if(userService.isUser(user.getEmail())){
         	System.out.println("\n\n\n**** 1 *****\n\n\n");
             messageMap.put("errorMessage","User Already Exists");
             return new ResponseEntity(messageMap, HttpStatus.FORBIDDEN);
@@ -69,7 +56,7 @@ public class LoginController {
                 messageMap.put("errrorMessage","Password must me atleast 8 character long");
                 return new ResponseEntity(messageMap, HttpStatus.FORBIDDEN);
             }
-            userDao.saveUser(user);
+            userService.saveUser(user);
             messageMap.put("successMessage","User Successfully Registered");
             return new ResponseEntity(messageMap, HttpStatus.OK);
         }catch(ConstraintViolationException ce) {
