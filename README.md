@@ -8,6 +8,10 @@
 | Gaurao Thakur		 | 001417955     | thakur.ga@husky.neu.edu |
 
 
+<<<<<<< HEAD
+## Build Instructions 
+Run cloudApplication.java
+=======
 ## Technology Stack
 1. J2EE
 2. Spring Boot
@@ -18,6 +22,7 @@
 2. Developing the source code for Rest based API endpoints.
 3. Mention persistant database environment (like MySQL) based details in applications.properties file
 
+>>>>>>> 24e3bd482744f943932f5762bd548ba18486e69a
 ## Deploy Instructions
 1. Download the csyeassign1 folder and unzip it.
 2. Create a MySQL database with name csyeassign1
