@@ -30,8 +30,8 @@ public class ImageServiceImplementation implements ImageService {
 
     }
 
-    
-	private String localPath = "/Home/Gaurav/images/";
+    //change path as per your computer
+	private String localPath = "//home/gaurav/images/";
 	
 	@Override
 	public String uploadFile(MultipartFile multipartFile) throws Exception {
