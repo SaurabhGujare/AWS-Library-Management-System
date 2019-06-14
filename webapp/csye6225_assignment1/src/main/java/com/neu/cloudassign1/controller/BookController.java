@@ -2,10 +2,10 @@ package com.neu.cloudassign1.controller;
 
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import com.neu.cloudassign1.dao.BookDAO;
 import com.neu.cloudassign1.exception.BookException;
 import com.neu.cloudassign1.model.Book;
 import com.neu.cloudassign1.service.BookService;
+import com.neu.cloudassign1.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +21,12 @@ import java.util.UUID;
 public class BookController {
 //    private BookDAO bookDAO;
     private BookService bookService;
+    private ImageService imageService;
 
     @Autowired
-    public BookController(BookService bookService) {
+    public BookController(BookService bookService, ImageService imageService) {
         this.bookService = bookService;
+        this.imageService = imageService;
     }
 
 
@@ -49,10 +51,46 @@ public class BookController {
     }
 
     @RequestMapping(value = "/book", method = RequestMethod.GET)
-    public List<Book> findAll() {
+    public List<Book> findAll() throws Exception {
 
-        return bookService.findAll();
+     return bookService.findAll();
+//    	HashMap<String, String> bookMap = new HashMap<String, String>();
+//    	List<Book> books = bookService.findAll();
+//    	List<CoverImage> images = imageService.getAllCoverImages();
+//
+//    	if(books.size() == 1){
+//
+//            bookMap.put("id", books.get(0).getId().toString());
+//            bookMap.put("title", books.get(0).getTitle());
+//            bookMap.put("author",books.get(0).getAuthor());
+//            bookMap.put("isbn",books.get(0).getIsbn());
+//            bookMap.put("quantity", String.valueOf(books.get(0).getQuantity()));
+//            return new ResponseEntity(bookMap, HttpStatus.OK);
+//        }
+//        else {
+//
+//            for (Book book : books) {
+//
+//                CoverImage image = new CoverImage();
+//
+//                image = imageService.getCoverImageByBookId(book.getId().toString());
+//
+//
+//                System.out.println("******************book**************************************" + book);
+//                System.out.println("*********************************************Image**********" + image);
+//
+//                bookMap.put("id", book.getId().toString());
+//                bookMap.put("title", book.getTitle());
+//                bookMap.put("author", book.getAuthor());
+//                bookMap.put("isbn", book.getIsbn());
+//                bookMap.put("quantity", Integer.toString(book.getQuantity()));
+//                bookMap.put("ImageId", image.getImageId().toString());
+//                bookMap.put("uri", image.getUri());
+//            }
+//
+//            return new ResponseEntity(bookMap, HttpStatus.OK);
 
+        }
     }
 
     @RequestMapping(value = "/book/{id}", method = RequestMethod.GET)

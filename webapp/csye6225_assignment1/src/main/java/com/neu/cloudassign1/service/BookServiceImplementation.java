@@ -5,13 +5,11 @@ import com.neu.cloudassign1.dao.BookDAO;
 import com.neu.cloudassign1.dao.BookRepository;
 import com.neu.cloudassign1.exception.BookException;
 import com.neu.cloudassign1.model.Book;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -33,7 +31,9 @@ public class BookServiceImplementation implements BookService {
 
     @Override
     public List<Book> findAll() {
-        return bookRepository.findAll();
+        List<Book> books = bookDAO.showBooks();
+        return books;
+        
     }
 
     @Override
