@@ -3,7 +3,6 @@ package com.neu.cloudassign1.service;
 
 import com.neu.cloudassign1.exception.BookException;
 import com.neu.cloudassign1.model.Book;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;

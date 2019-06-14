@@ -1,22 +1,17 @@
 package com.neu.cloudassign1.dao;
 
-import javax.persistence.Query;
-
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
-import javax.validation.ConstraintViolationException;
-
+import com.neu.cloudassign1.exception.UserException;
+import com.neu.cloudassign1.model.User;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
-import com.neu.cloudassign1.exception.UserException;
-import com.neu.cloudassign1.model.User;
-import java.util.UUID;
-
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
+import java.util.List;
 
 
 @Repository
