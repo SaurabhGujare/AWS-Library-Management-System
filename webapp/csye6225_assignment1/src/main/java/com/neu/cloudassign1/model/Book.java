@@ -9,8 +9,9 @@ import java.util.UUID;
 public class Book {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    private UUID id;
+    @GeneratedValue
+    @Column(length = 16)
+    private UUID id=UUID.randomUUID();
 
     @Column(name="title")
     @NotNull(message="is required")
@@ -27,11 +28,9 @@ public class Book {
     @Column(name="quantity")
     @NotNull(message="is required")
     private int quantity;
-    
-//    @OneToOne
-//    @JoinColumn(name="CoverImageId")
-//    private CoverImage coverImage;
 
+    @OneToOne(mappedBy = "book")
+    private CoverImage coverImage;
 
     public Book() {
 
@@ -42,7 +41,6 @@ public class Book {
         this.author = author;
         this.isbn = isbn;
         this.quantity = quantity;
-//        this.coverImage = coverImage;
     }
 
     public UUID getId() {
@@ -84,24 +82,24 @@ public class Book {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    
 
-//    public CoverImage getCoverImage() {
-//		return coverImage;
-//	}
-//
-//	public void setCoverImage(CoverImage coverImage) {
-//		this.coverImage = coverImage;
-//	}
-	
-	
-	
-	@Override
-	public String toString() {
-		return "Book [id=" + id + ", title=" + title + ", author=" + author + ", isbn=" + isbn + ", quantity="
-				+ quantity + "]";
-	}
+    public CoverImage getCoverImage() {
+        return coverImage;
+    }
 
-	
-	
+    public void setCoverImage(CoverImage coverImage) {
+        this.coverImage = coverImage;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", quantity=" + quantity +
+                ", coverImage=" + coverImage +
+                '}';
+    }
 }
