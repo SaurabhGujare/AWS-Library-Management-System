@@ -37,13 +37,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <!--add this exclusion to your pom -->
-            <!--			<exclusions>-->
-            <!--				<exclusion>-->
-            <!--				<groupId>org.springframework.boot</groupId>-->
-            <!--				<artifactId>spring-boot-starter-tomcat</artifactId>-->
-            <!--			</exclusion>-->
-            <!--			</exclusions>-->
         </dependency>
 
         <dependency>
@@ -51,6 +44,7 @@
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -81,12 +75,6 @@
             <artifactId>spring-security-config</artifactId>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
-        <!-- <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency> -->
-
         <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -100,17 +88,44 @@
             <artifactId>spring-responseentitybuilder</artifactId>
             <version>1.1.0.RELEASE</version>
         </dependency>
+
         <dependency>
             <groupId>com.vaadin.external.google</groupId>
             <artifactId>android-json</artifactId>
             <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk -->
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk</artifactId>
-            <version>1.11.133</version>
+            <version>1.11.580</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.16</version>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-aws-jdbc -->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-aws-jdbc</artifactId>-->
+<!--            <version>1.0.0.RELEASE</version>-->
+<!--        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/com.zaxxer/HikariCP -->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>3.3.1</version>
+        </dependency>
+
+
 
     </dependencies>
 
@@ -120,12 +135,6 @@
             <properties>
                 <activatedProperties>cloud</activatedProperties>
             </properties>
-<!--            <activation>-->
-<!--                <property>-->
-<!--                    <name>env</name>-->
-<!--                    <value>cloud</value>-->
-<!--                </property>-->
-<!--            </activation>-->
             <dependencies>
                 <dependency>
                     <groupId>org.springframework.boot</groupId>
@@ -133,7 +142,6 @@
                     <scope>provided</scope>
                 </dependency>
             </dependencies>
-
         </profile>
 
     </profiles>
