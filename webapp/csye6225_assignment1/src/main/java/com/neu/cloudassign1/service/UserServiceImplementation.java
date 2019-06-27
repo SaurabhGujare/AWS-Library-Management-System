@@ -1,6 +1,6 @@
 package com.neu.cloudassign1.service;
 
-import com.neu.cloudassign1.dao.UserRepository;
+import com.neu.cloudassign1.repository.UserRepository;
 import com.neu.cloudassign1.exception.UserException;
 import com.neu.cloudassign1.model.User;
 import org.hibernate.Session;

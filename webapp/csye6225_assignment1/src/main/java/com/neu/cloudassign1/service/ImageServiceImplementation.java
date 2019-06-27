@@ -1,89 +1,108 @@
 package com.neu.cloudassign1.service;
 
-import com.neu.cloudassign1.dao.BookDAO;
-import com.neu.cloudassign1.dao.ImageDAO;
+import com.neu.cloudassign1.exception.BookException;
+import com.neu.cloudassign1.exception.ImageExistsException;
+import com.neu.cloudassign1.exception.InvalidFileException;
+import com.neu.cloudassign1.model.Book;
 import com.neu.cloudassign1.model.CoverImage;
-import com.neu.cloudassign1.util.Utils;
+import com.neu.cloudassign1.repository.BookRepository;
+import com.neu.cloudassign1.repository.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.EntityManager;
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
+import java.awt.*;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ImageServiceImplementation implements ImageService {
 
-    private ImageDAO imageDAO;
-    private EntityManager entityManager;
-    private BookDAO bookDAO;
+    @Autowired
+    private ImageRepository imageRepository;
 
     @Autowired
-    private ImageServiceImplementation(EntityManager entityManager, ImageDAO imageDAO, BookDAO bookDAO){
-        this.entityManager = entityManager;
-        this.imageDAO = imageDAO;
-        this.bookDAO = bookDAO;
+    private BookRepository bookRepository;
 
+    @Autowired
+    private FileSystemStorageService storageService;
+
+    @Autowired
+    private BookService bookService;
+
+    @Autowired
+    private BaseClient baseClient;
+
+    @Override
+    public CoverImage addBookImage(UUID uuid, MultipartFile file) throws BookException, ImageExistsException, InvalidFileException {
+        String fileType = file.getContentType();
+        if(!fileType.equals("image/jpeg") && !fileType.equals("image/png"))
+        {
+            throw new InvalidFileException("Only images of .png, .jpg or .jpeg formats are accepted");
+        }
+        Optional<Book> book = bookRepository.findById(uuid);
+        if(book.isEmpty())
+        {
+            throw new BookException("Could not find book with id : "+uuid);
+        }
+        Optional<CoverImage> existingImage = imageRepository.findById(uuid);
+        if(existingImage.isPresent())
+        {
+            throw new ImageExistsException("Image exists for book with id : "+uuid+". Update the book image using the PUT request.");
+        }
+        //String uri = storageService.store(file);
+        System.out.println("\n\nInsideImgServImpl Before baseClient.uploadFile(file, uuid)");
+        String uri = baseClient.uploadFile(file, uuid);
+        System.out.println("\n\nInsideImgServImpl After baseClient.uploadFile(file, uuid)");
+        CoverImage image = new CoverImage();
+        image.setBook(book.get());
+        image.setId(uuid);
+        image.setUri(uri);
+        imageRepository.save(image);
+        return image;
     }
 
-    //change path as per your computer
-	private String localPath = "//home/gaurav/images/";
-	
-	@Override
-	public String uploadFile(MultipartFile multipartFile) throws Exception {
-		
-		byte[] bytes = multipartFile.getBytes();
-        Path path = Paths.get(localPath + Utils.generateFileName(multipartFile));
-        Files.write(path, bytes);
-        
-		return path.toString();
-	}
+    @Override
+    public CoverImage updateBookImage(UUID uuid, MultipartFile file) throws BookException, InvalidFileException {
+        String fileType = file.getContentType();
+        if(!fileType.equals("image/jpeg") && !fileType.equals("image/png"))
+        {
+            throw new InvalidFileException("Only images of .png, .jpg or .jpeg formats are accepted");
+        }
+        Optional<Book> result = bookRepository.findById(uuid);
+        if(result.isEmpty())
+        {
+            throw new BookException("Could not find book with id : "+uuid);
+        }
+        Book book = result.get();
 
-	@Override
-	public String deleteFile(String fileUrl) throws Exception {
-		
-		File file = new File(fileUrl);
-		String result = "Delete attachment for transaction failed";
-		if(file.delete()){
-			result = file.getName() + " " + "Deleted Successfully";
-		}
-		
-		return result;
-		
-	}
+        //storageService.deleteFile(book.getCoverImage().getUri());
+        String deleteMessage = baseClient.deleteFile(book.getCoverImage().getUri());
+        System.out.println("\n\n***"+deleteMessage);
 
-	@Override
-	public void saveImage(String id, String uri) throws Exception {
+        //String uri = storageService.store(file);
+        String uri = baseClient.uploadFile(file, uuid);
 
-//		Book book = bookDAO.getBookById(id);
-		
-		CoverImage image  = new CoverImage();
-		image.setUri(uri);
-		image.setBookId(id);
-		imageDAO.saveCoverImage(image);
-		
-		
-//		Book book = bookDAO.getBookById(id);
-//		book.setCoverImage(image);
-//		
-//		bookDAO.updateBookForImage(book, book.getTitle());
-		
-	}
+        CoverImage image = new CoverImage();
+        image.setBook(result.get());
+        image.setId(uuid);
+        image.setUri(uri);
+        imageRepository.save(image);
+        return image;
+    }
 
-	@Override
-	public List<CoverImage> getAllCoverImages() throws Exception {
-		// TODO Auto-generated method stub
-		return imageDAO.getAllCoverImage();
-	}
+    @Override
+    public void deleteBookImage(UUID bookid) throws BookException, InvalidFileException{
 
-	@Override
-	public CoverImage getCoverImageByBookId(String id) throws Exception {
-		// TODO Auto-generated method stub
-		return imageDAO.getCoverImageByBookId(id);
-	}
-	
+            Optional<Book> result = bookRepository.findById(bookid);
+            if (result.isEmpty()) {
+                throw new BookException("Could not find book with id : " + bookid);
+            }
+            Book book = result.get();
+            imageRepository.deleteById(book.getCoverImage().getId());
+            //storageService.deleteFile(book.getCoverImage().getUri());
+            String deleteMessage = baseClient.deleteFile(book.getCoverImage().getUri());
+            System.out.println("\n\n***"+deleteMessage);
+
+    }
 }
