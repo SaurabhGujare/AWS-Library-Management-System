@@ -11,6 +11,7 @@ import com.neu.cloudassign1.model.CoverImage;
 import com.neu.cloudassign1.service.BaseClient;
 import com.neu.cloudassign1.service.BookService;
 import com.neu.cloudassign1.service.ImageService;
+import com.neu.cloudassign1.utils.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,13 +31,13 @@ public class BookController {
 
     private BookService bookService;
     private ImageService imageService;
-
+    private BaseClient baseClient;
 
     @Autowired
-    public BookController(BookService bookService, ImageService imageService) {
+    public BookController(BookService bookService, ImageService imageService, BaseClient baseClient) {
         this.bookService = bookService;
         this.imageService = imageService;
-
+        this.baseClient =baseClient;
     }
 
 
@@ -62,6 +63,12 @@ public class BookController {
 
     @RequestMapping(value = "/book", method = RequestMethod.GET)
     public List<Book> findAll() {
+        for(Book book: bookService.findAll()){
+            //Se PresignedURL to CoverImage while returning all the books
+            book.getCoverImage().setUri(
+                    baseClient.GeneratePresignedURL(Utility.generateS3BucketObjectKey(
+                            book.getCoverImage().getUri())).toString());
+        }
 
         return bookService.findAll();
 
@@ -72,6 +79,11 @@ public class BookController {
 
         try
         {
+            //Set PresignedURL to CoverImage while returning a book
+            bookService.findById(id).getCoverImage().setUri(
+                    baseClient.GeneratePresignedURL(Utility.generateS3BucketObjectKey(
+                            bookService.findById(id).getCoverImage().getUri())).toString());
+
             return new ResponseEntity(bookService.findById(id), HttpStatus.OK);
         }
         catch (BookException e)
@@ -167,7 +179,12 @@ public class BookController {
                 throw new ImageNotFoundException("No image with the given Id found");
             }
             imageMap.put("id",image.getId().toString());
-            imageMap.put("url",image.getUri());
+            //imageMap.put("url",image.getUri());
+
+            //Set PresignedURL to CoverImage
+            imageMap.put("url",baseClient.GeneratePresignedURL(
+                    Utility.generateS3BucketObjectKey(image.getUri())).toString());
+
             return new ResponseEntity(imageMap, HttpStatus.OK);
         }catch(BookException be){
             imageMap.put("error",be.getLocalizedMessage());
