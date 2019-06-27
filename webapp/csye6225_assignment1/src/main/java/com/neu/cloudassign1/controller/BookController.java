@@ -64,10 +64,12 @@ public class BookController {
     @RequestMapping(value = "/book", method = RequestMethod.GET)
     public List<Book> findAll() {
         for(Book book: bookService.findAll()){
-            //Se PresignedURL to CoverImage while returning all the books
-            book.getCoverImage().setUri(
-                    baseClient.GeneratePresignedURL(Utility.generateS3BucketObjectKey(
-                            book.getCoverImage().getUri())).toString());
+            //Set PresignedURL to CoverImage while returning all the books
+            if(book.getCoverImage()!=null) {
+                book.getCoverImage().setUri(
+                        baseClient.GeneratePresignedURL(Utility.generateS3BucketObjectKey(
+                                book.getCoverImage().getUri())).toString());
+            }
         }
 
         return bookService.findAll();
@@ -77,13 +79,13 @@ public class BookController {
     @RequestMapping(value = "/book/{id}", method = RequestMethod.GET)
     public ResponseEntity getBook(@PathVariable UUID id) throws BookException {
 
-        try
-        {
+        try {
             //Set PresignedURL to CoverImage while returning a book
-            bookService.findById(id).getCoverImage().setUri(
-                    baseClient.GeneratePresignedURL(Utility.generateS3BucketObjectKey(
-                            bookService.findById(id).getCoverImage().getUri())).toString());
-
+            if (bookService.findById(id).getCoverImage() != null){
+                bookService.findById(id).getCoverImage().setUri(
+                        baseClient.GeneratePresignedURL(Utility.generateS3BucketObjectKey(
+                                bookService.findById(id).getCoverImage().getUri())).toString());
+            }
             return new ResponseEntity(bookService.findById(id), HttpStatus.OK);
         }
         catch (BookException e)

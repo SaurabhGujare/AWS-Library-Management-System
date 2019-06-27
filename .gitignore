@@ -108,3 +108,4 @@ venv.bak/
 *.iws
 *.iml
 *.ipr
+*.DS_Store
