@@ -110,14 +110,6 @@
             <version>8.0.16</version>
         </dependency>
 
-
-        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-aws-jdbc -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-aws-jdbc</artifactId>-->
-<!--            <version>1.0.0.RELEASE</version>-->
-<!--        </dependency>-->
-
         <!-- https://mvnrepository.com/artifact/com.zaxxer/HikariCP -->
         <dependency>
             <groupId>com.zaxxer</groupId>
@@ -125,16 +117,11 @@
             <version>3.3.1</version>
         </dependency>
 
-
-
     </dependencies>
 
     <profiles>
         <profile>
             <id>cloud</id>
-            <properties>
-                <activatedProperties>cloud</activatedProperties>
-            </properties>
             <dependencies>
                 <dependency>
                     <groupId>org.springframework.boot</groupId>
@@ -143,7 +130,6 @@
                 </dependency>
             </dependencies>
         </profile>
-
     </profiles>
 
     <build>
