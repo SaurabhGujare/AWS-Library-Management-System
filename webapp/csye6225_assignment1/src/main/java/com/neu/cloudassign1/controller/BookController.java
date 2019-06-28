@@ -3,15 +3,24 @@ package com.neu.cloudassign1.controller;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.neu.cloudassign1.exception.BookException;
+import com.neu.cloudassign1.exception.ImageExistsException;
+import com.neu.cloudassign1.exception.ImageNotFoundException;
+import com.neu.cloudassign1.exception.InvalidFileException;
 import com.neu.cloudassign1.model.Book;
+import com.neu.cloudassign1.model.CoverImage;
+import com.neu.cloudassign1.service.BaseClient;
 import com.neu.cloudassign1.service.BookService;
 import com.neu.cloudassign1.service.ImageService;
+import com.neu.cloudassign1.utils.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,14 +28,16 @@ import java.util.UUID;
 
 @RestController
 public class BookController {
-//    private BookDAO bookDAO;
+
     private BookService bookService;
     private ImageService imageService;
+    private BaseClient baseClient;
 
     @Autowired
-    public BookController(BookService bookService, ImageService imageService) {
+    public BookController(BookService bookService, ImageService imageService, BaseClient baseClient) {
         this.bookService = bookService;
         this.imageService = imageService;
+        this.baseClient =baseClient;
     }
 
 
@@ -51,70 +62,35 @@ public class BookController {
     }
 
     @RequestMapping(value = "/book", method = RequestMethod.GET)
-    public List<Book> findAll() throws Exception {
+    public List<Book> findAll() {
+        for(Book book: bookService.findAll()){
+            //Set PresignedURL to CoverImage while returning all the books
+            if(book.getCoverImage()!=null) {
+                book.getCoverImage().setUri(
+                        baseClient.GeneratePresignedURL(Utility.generateS3BucketObjectKey(
+                                book.getCoverImage().getUri())).toString());
+            }
+        }
 
-     return bookService.findAll();
-//    	HashMap<String, String> bookMap = new HashMap<String, String>();
-//    	List<Book> books = bookService.findAll();
-//    	List<CoverImage> images = imageService.getAllCoverImages();
-//
-//    	if(books.size() == 1){
-//
-//            bookMap.put("id", books.get(0).getId().toString());
-//            bookMap.put("title", books.get(0).getTitle());
-//            bookMap.put("author",books.get(0).getAuthor());
-//            bookMap.put("isbn",books.get(0).getIsbn());
-//            bookMap.put("quantity", String.valueOf(books.get(0).getQuantity()));
-//            return new ResponseEntity(bookMap, HttpStatus.OK);
-//        }
-//        else {
-//
-//            for (Book book : books) {
-//
-//                CoverImage image = new CoverImage();
-//
-//                image = imageService.getCoverImageByBookId(book.getId().toString());
-//
-//
-//                System.out.println("******************book**************************************" + book);
-//                System.out.println("*********************************************Image**********" + image);
-//
-//                bookMap.put("id", book.getId().toString());
-//                bookMap.put("title", book.getTitle());
-//                bookMap.put("author", book.getAuthor());
-//                bookMap.put("isbn", book.getIsbn());
-//                bookMap.put("quantity", Integer.toString(book.getQuantity()));
-//                bookMap.put("ImageId", image.getImageId().toString());
-//                bookMap.put("uri", image.getUri());
-//            }
-//
-//            return new ResponseEntity(bookMap, HttpStatus.OK);
+        return bookService.findAll();
 
-    //    }
     }
 
     @RequestMapping(value = "/book/{id}", method = RequestMethod.GET)
     public ResponseEntity getBook(@PathVariable UUID id) throws BookException {
 
-        Map<String,String> bookMap = new HashMap<>();
-        try{
-            Book book = bookService.getBookById(id);
-            if(book == null){
-                bookMap.put("errorMessage","Book with id "+id+" not found");
-                return new ResponseEntity(bookMap, HttpStatus.NOT_FOUND);
-            }else{
-                bookMap.put("id", book.getId().toString());
-                bookMap.put("title",book.getTitle());
-                bookMap.put("author",book.getAuthor());
-                bookMap.put("isbn",book.getIsbn());
-                bookMap.put("quantity",Integer.toString(book.getQuantity()));
-                return new ResponseEntity(bookMap, HttpStatus.OK);
+        try {
+            //Set PresignedURL to CoverImage while returning a book
+            if (bookService.findById(id).getCoverImage() != null){
+                bookService.findById(id).getCoverImage().setUri(
+                        baseClient.GeneratePresignedURL(Utility.generateS3BucketObjectKey(
+                                bookService.findById(id).getCoverImage().getUri())).toString());
             }
-
-        } catch(Exception e){
-            bookMap.clear();
-            bookMap.put("errorMessage","Unable to get the book");
-            return new ResponseEntity(bookMap, HttpStatus.NOT_FOUND);
+            return new ResponseEntity(bookService.findById(id), HttpStatus.OK);
+        }
+        catch (BookException e)
+        {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,e.getMessage(),e);
         }
 
     }
@@ -146,7 +122,7 @@ public class BookController {
     }
 
     @RequestMapping(value = "/book/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity deleteBook(@PathVariable UUID id) throws BookException {
+    public ResponseEntity deleteBook(@PathVariable UUID id){
         Map<String,String> bookMap = new HashMap<>();
         try{
             Book book = bookService.getBookById(id);
@@ -154,19 +130,117 @@ public class BookController {
                 bookMap.put("errorMessage","Book with id "+id+" not found");
                 return new ResponseEntity(bookMap,HttpStatus.BAD_REQUEST);
             }else {
-                bookService.deleteBookByTitle(book);
+                bookService.deleteById(id);
                 bookMap.put("successMessage", "Book with id " + id + " deleted successfully");
                 return new ResponseEntity(bookMap, HttpStatus.OK);
             }
         }catch (BookException be){
             bookMap.clear();
             bookMap.put("errorMessage", "Unable to delete book with id " + id );
-            return new ResponseEntity(bookMap, HttpStatus.OK);
+            return new ResponseEntity(bookMap, HttpStatus.BAD_REQUEST);
+        }
 
-        } catch (Exception e) {
-            bookMap.clear();
-            bookMap.put("errorMessage", "Unable to delete book with id " + id );
-            return new ResponseEntity(bookMap, HttpStatus.OK);
+    }
+
+    @PostMapping("/book/{bookId}/image")
+    public CoverImage addBookImage(@Valid @PathVariable UUID bookId, @RequestParam("file") MultipartFile file)
+    {
+        CoverImage image;
+        try
+        {
+            image = imageService.addBookImage(bookId, file);
+        }
+        catch (BookException e)
+        {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,e.getMessage(),e);
+        }
+        catch (ImageExistsException e)
+        {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,e.getMessage(),e);
+        }
+        catch (InvalidFileException e)
+        {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,e.getMessage(),e);
+        }
+        return image;
+    }
+
+    @GetMapping("/book/{bookId}/image/{imageId}")
+    public ResponseEntity getBookImage(@Valid @PathVariable UUID bookId, @PathVariable UUID imageId)
+    {
+        Map<String, String> imageMap = new HashMap<String, String>();
+        CoverImage image=null;
+        Book book= null;
+        try{
+            book = bookService.getBookById(bookId);
+            image = book.getCoverImage();
+            if(book == null) {
+                System.out.println("\n\nBook ids do not match");
+                throw new BookException("No book is found with that id");
+            }else if(!image.getId().equals(imageId)){
+                throw new ImageNotFoundException("No image with the given Id found");
+            }
+            imageMap.put("id",image.getId().toString());
+            //imageMap.put("url",image.getUri());
+
+            //Set PresignedURL to CoverImage
+            imageMap.put("url",baseClient.GeneratePresignedURL(
+                    Utility.generateS3BucketObjectKey(image.getUri())).toString());
+
+            return new ResponseEntity(imageMap, HttpStatus.OK);
+        }catch(BookException be){
+            imageMap.put("error",be.getLocalizedMessage());
+            return new ResponseEntity(imageMap, HttpStatus.UNAUTHORIZED);
+        }catch (ImageNotFoundException ie) {
+            imageMap.put("error",ie.getLocalizedMessage());
+            return new ResponseEntity(imageMap, HttpStatus.UNAUTHORIZED);
+        }
+
+    }
+
+    @PutMapping("/book/{bookId}/image/{imageId}")
+    public CoverImage updateBookImage(@Valid @PathVariable UUID bookId, @Valid @PathVariable UUID imageId, @RequestParam("file") MultipartFile file)
+    {
+        CoverImage image;
+        try
+        {
+            if(!bookService.getBookById(bookId).getCoverImage().getId().equals(imageId)){
+                throw new ImageNotFoundException("Image with given id did not found");
+            }
+            image = imageService.updateBookImage(bookId, file);
+        }
+        catch (BookException e)
+        {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,e.getMessage(),e);
+        }
+        catch (InvalidFileException e)
+        {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,e.getMessage(),e);
+        }
+        catch (ImageNotFoundException e) {
+
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,e.getMessage(),e);
+        }
+        return image;
+    }
+
+    @DeleteMapping("/book/{bookId}/image/{imageId}")
+    public void deleteBookImage(@Valid @PathVariable UUID bookId, @Valid @PathVariable UUID imageId)
+    {
+        try
+        {
+            if(!bookService.getBookById(bookId).getCoverImage().getId().equals(imageId)){
+                throw new ImageNotFoundException("Image with given id did not found");
+            }
+            imageService.deleteBookImage(bookId);
+        }
+        catch (BookException e)
+        {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,e.getMessage(),e);
+        } catch (ImageNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,e.getMessage(),e);
+        } catch (InvalidFileException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,e.getMessage(),e);
         }
 
     }

@@ -1,20 +1,16 @@
 package com.neu.cloudassign1.service;
 
+import com.neu.cloudassign1.exception.BookException;
+import com.neu.cloudassign1.exception.ImageExistsException;
+import com.neu.cloudassign1.exception.InvalidFileException;
 import com.neu.cloudassign1.model.CoverImage;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.awt.*;
+import java.util.UUID;
 
 public interface ImageService {
-	
-	public String uploadFile(MultipartFile multipartFile) throws Exception;
-	
-	public String deleteFile(String fileUrl) throws Exception;
-	
-	public void saveImage(String id, String path) throws Exception;
-	
-	public List<CoverImage> getAllCoverImages() throws Exception;
-	
-	public CoverImage getCoverImageByBookId(String id) throws Exception;
-
+    public CoverImage addBookImage(UUID uuid, MultipartFile image) throws BookException, ImageExistsException, InvalidFileException;
+    public CoverImage updateBookImage(UUID uuid, MultipartFile file) throws BookException, InvalidFileException;
+    public void deleteBookImage(UUID bookid) throws BookException, InvalidFileException;
 }

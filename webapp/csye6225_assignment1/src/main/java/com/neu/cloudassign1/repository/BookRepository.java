@@ -1,4 +1,4 @@
-package com.neu.cloudassign1.dao;
+package com.neu.cloudassign1.repository;
 
 import com.neu.cloudassign1.model.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
