@@ -1,5 +1,8 @@
 STACK_NAME=$1
-keyName=$2
+read -p 'Enter your EC2 key pair name ' KEY_PAIR
+
+read -p 'Enter your NUID ID (for ex. If NUID  is doe.j@husky.neu.edu then enter doej) ' BUCKET_NAME
+
 EC2_NAME="${STACK_NAME}-csye6225-ec2"
 echo "VPC_NAME : ${VPC_NAME}"
 echo "EC2_NAME : ${EC2_NAME}"
@@ -14,7 +17,7 @@ echo "subnetid3 : ${subnetId3}"
 export AMI=$(aws ec2 describe-images --filters "Name=name,Values=*csye6225*" --query 'sort_by(Images, &CreationDate)[-1].ImageId' --output text)
 echo "AMI: ${AMI}" 
 
-aws cloudformation create-stack --stack-name $STACK_NAME --template-body file://csye6225-cf-application.json --parameters ParameterKey=VpcId,ParameterValue=$vpcId ParameterKey=EC2Name,ParameterValue=$EC2_Name ParameterKey=SubnetId1,ParameterValue=$subnetId1 ParameterKey=SubnetId2,ParameterValue=$subnetId2 ParameterKey=SubnetId3,ParameterValue=$subnetId3 ParameterKey=AMI,ParameterValue=$AMI ParameterKey=keyName,ParameterValue=$keyName
+aws cloudformation create-stack --stack-name $STACK_NAME --template-body file://csye6225-cf-application.json --parameters ParameterKey=VpcId,ParameterValue=$vpcId ParameterKey=EC2Name,ParameterValue=$EC2_Name ParameterKey=SubnetId1,ParameterValue=$subnetId1 ParameterKey=SubnetId2,ParameterValue=$subnetId2 ParameterKey=SubnetId3,ParameterValue=$subnetId3 ParameterKey=AMI,ParameterValue=$AMI ParameterKey=keyName,ParameterValue=$KEY_PAIR ParameterKey=BucketName,ParameterValue=$BUCKET_NAME
 
 export STACK_STATUS=$(aws cloudformation describe-stacks --stack-name $STACK_NAME --query "Stacks[][ [StackStatus ] ][]" --output text)
 
