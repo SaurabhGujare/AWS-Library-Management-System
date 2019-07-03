@@ -12,13 +12,12 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.*;
 import java.util.Optional;
 import java.util.UUID;
 
-@Profile("cloud")
+@Profile("local")
 @Service
-public class ImageServiceImplementation implements ImageService {
+public class ImageServiceLocalImplementaion implements ImageService{
 
     @Autowired
     private ImageRepository imageRepository;
@@ -52,9 +51,9 @@ public class ImageServiceImplementation implements ImageService {
         {
             throw new ImageExistsException("Image exists for book with id : "+uuid+". Update the book image using the PUT request.");
         }
-        //String uri = storageService.store(file);
+        String uri = storageService.store(file);
         System.out.println("\n\nInsideImgServImpl Before baseClient.uploadFile(file, uuid)");
-        String uri = baseClient.uploadFile(file, uuid);
+        //String uri = baseClient.uploadFile(file, uuid);
         System.out.println("\n\nInsideImgServImpl After baseClient.uploadFile(file, uuid)");
         CoverImage image = new CoverImage();
         image.setBook(book.get());
@@ -78,12 +77,12 @@ public class ImageServiceImplementation implements ImageService {
         }
         Book book = result.get();
 
-        //storageService.deleteFile(book.getCoverImage().getUri());
-        String deleteMessage = baseClient.deleteFile(book.getCoverImage().getUri());
-        System.out.println("\n\n***"+deleteMessage);
+        storageService.deleteFile(book.getCoverImage().getUri());
+        //String deleteMessage = baseClient.deleteFile(book.getCoverImage().getUri());
+        //System.out.println("\n\n***"+deleteMessage);
 
-        //String uri = storageService.store(file);
-        String uri = baseClient.uploadFile(file, uuid);
+        String uri = storageService.store(file);
+        //String uri = baseClient.uploadFile(file, uuid);
 
         CoverImage image = new CoverImage();
         image.setBook(result.get());
@@ -94,19 +93,16 @@ public class ImageServiceImplementation implements ImageService {
     }
 
     @Override
-    public void deleteBookImage(UUID bookid) throws BookException, InvalidFileException{
-
+    public void deleteBookImage(UUID bookid) throws BookException, InvalidFileException {
         Optional<Book> result = bookRepository.findById(bookid);
         if (result.isEmpty()) {
             throw new BookException("Could not find book with id : " + bookid);
         }
         Book book = result.get();
         imageRepository.deleteById(book.getCoverImage().getId());
-        //storageService.deleteFile(book.getCoverImage().getUri());
-        String deleteMessage = baseClient.deleteFile(book.getCoverImage().getUri());
-        System.out.println("\n\n***"+deleteMessage);
+        storageService.deleteFile(book.getCoverImage().getUri());
+        //String deleteMessage = baseClient.deleteFile(book.getCoverImage().getUri());
+        //System.out.println("\n\n***"+deleteMessage);
 
     }
-
-
 }

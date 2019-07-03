@@ -13,6 +13,7 @@ import com.neu.cloudassign1.service.BookService;
 import com.neu.cloudassign1.service.ImageService;
 import com.neu.cloudassign1.utils.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;

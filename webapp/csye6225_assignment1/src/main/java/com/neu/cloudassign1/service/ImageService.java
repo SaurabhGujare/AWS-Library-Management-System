@@ -13,4 +13,5 @@ public interface ImageService {
     public CoverImage addBookImage(UUID uuid, MultipartFile image) throws BookException, ImageExistsException, InvalidFileException;
     public CoverImage updateBookImage(UUID uuid, MultipartFile file) throws BookException, InvalidFileException;
     public void deleteBookImage(UUID bookid) throws BookException, InvalidFileException;
+
 }
