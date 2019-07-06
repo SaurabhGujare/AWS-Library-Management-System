@@ -16,7 +16,8 @@
 		},
 		"VpcId":{"Type":"String"},
 		"AMI":{"Type":"String"},
-		"keyName":{"Type":"String"}
+		"keyName":{"Type":"String"},
+		"BucketName":{"Type":"String"}
 	},
 	"Resources": {
 		"ourEC2Instance": {
@@ -48,8 +49,25 @@
 				}],
 				"SubnetId" : {
 					"Ref":"SubnetId1"
+				},
+				"UserData":{
+					"Fn::Base64":{
+						"Fn::Join":[
+							"",
+							[
+								"#!/bin/bash \n",
+								"echo export rds_mysql_endpoint=",{"Fn::GetAtt":["MyRDSDB","Endpoint.Address"]},">>/etc/profile \n",
+								"echo export rds_mysql_port=",{"Fn::GetAtt":["MyRDSDB","Endpoint.Port"]},">>/etc/profile \n",
+								"echo export rds_mysql_username='csye6225master'>>/etc/profile \n",
+								"echo export rds_mysql_password='csye6225password'>>/etc/profile \n",
+								"echo export rds_mysql_database='csye6225'>>/etc/profile \n",
+								"echo export spring_bucket_name=",{"Fn::Sub":"csye6225-su19-${BucketName}.me.csye6225.com"},">>/etc/profile \n",
+								"source /etc/profile"
+							]
+						]
+					}
 				}
-			}
+			}	
 		},
 		"WebServerSecurityGroup" : {
 			"Type" : "AWS::EC2::SecurityGroup",
@@ -104,15 +122,16 @@
 			"Properties" : {
 				"VpcId" : {"Ref":"VpcId"},
 				"GroupDescription": "Open database for access",
-				"SecurityGroupIngress" : [{
-				"IpProtocol" : "tcp",
-				"FromPort" : "3306",
-				"ToPort" : "3306",
-				 "SourceSecurityGroupId":{
-                     "Ref":"WebServerSecurityGroup"
-                  }
-				
-				}]
+				"SecurityGroupIngress" : [
+						{
+						"IpProtocol" : "tcp",
+						"FromPort" : "3306",
+						"ToPort" : "3306",
+						"SourceSecurityGroupId":{
+							"Ref":"WebServerSecurityGroup"
+						}
+					}
+				]
 			}
 		},
 
