@@ -2,28 +2,43 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/openjdk:12-jdk
+      - image: circleci/openjdk:11.0.1-jdk
+
+    working_directory: ~/ccwebapp
+
     steps:
+      # git pull
       - checkout
+
+      # setup testing env
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run:
-          name: Install packages
-          command: sudo apt-get update && sudo apt-get install wget zip unzip -y
+          name: Login to DockerHub
+          command: docker login -u $DOCKER_USER -p $DOCKER_PASS
       - run:
-          name: Install awscli
-          command: sudo pip install awscli
-      - run:
-          name: Download packer
-          command: |
-            wget -q https://releases.hashicorp.com/packer/1.3.4/packer_1.3.4_linux_amd64.zip
-            unzip packer*.zip
-            chmod +x packer
-      - run:
-          name: Validate Packer Template
-          command: ./packer validate centos-ami-template.json
-      - run:
-          name: Build AMI
-          command: |
-            ./packer build \
-            -var "aws_region=${AWS_REGION}" \
-            -var "subnet_id=${AWS_SUBNET_ID}" \
-            centos-ami-template.json
+          name: Decrpyt Secrets
+          command: openssl enc -d -aes-256-ecb -md md5 -in src/main/resources/application-cloud.properties.secrets -out src/main/resources/application-cloud.properties -k $SECRETS_KEY
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - ccwebapp-{{ checksum "pom.xml" }}
+
+      - run: mvn dependency:go-offline
+
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: ccwebapp-{{ checksum "pom.xml" }}
+
+      # package into a jar
+      - run: mvn clean package
+
+      # build and push docker image to docker hub
+      - run: mvn clean compile jib:build -Dimage=zarinlo/ccwebapp:$CIRCLE_BUILD_NUM
+
+      # store raw contents of src code
+      - store_artifacts:
+          path: target/classes
+destination: ccwebapp
