@@ -2,12 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7bebd3f8-101a-4523-906e-965ff80fb206" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-aws-cf-create-circleci-policies.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-aws-cf-create-circleci-policies.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-aws-cf-create-application-stack.sh" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-aws-cf-create-application-stack.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-aws-cf-terminate-stack.sh" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-aws-cf-terminate-stack.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-cf-application.json" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-cf-application.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-cf-networking.json" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-cf-networking.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/appspec.yml" beforeDir="false" afterPath="$PROJECT_DIR$/appspec.yml" afterDir="false" />
     </list>
+    <ignored path="$PROJECT_DIR$/webapp/csye6225_assignment1/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,33 +22,15 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/webapp/csye6225_assignment1/src/main/java/com/neu/cloudassign1/Cloudassign1Application.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" selection-start-line="4" selection-end-line="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-cf-networking.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="585">
-              <caret line="39" column="12" selection-start-line="39" selection-start-column="12" selection-end-line="39" selection-end-column="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-aws-cf-create-application-stack.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="28" selection-start-line="28" selection-end-line="28" />
+            <state relative-caret-position="450">
+              <caret line="30" selection-start-line="30" selection-end-line="30" />
             </state>
           </provider>
         </entry>
@@ -70,12 +54,51 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-cf-application.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-270" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-aws-cf-create-circleci-policies.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3945">
+              <caret line="263" column="15" lean-forward="true" selection-start-line="263" selection-start-column="15" selection-end-line="263" selection-end-column="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/appspec.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="4" column="37" selection-start-line="4" selection-start-column="37" selection-end-line="4" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-aws-cf-create-circleci-policies.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="495">
+              <caret line="33" column="65" lean-forward="true" selection-start-line="33" selection-start-column="65" selection-end-line="33" selection-end-column="65" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-aws-cf-create-stack.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="330">
               <caret line="22" selection-start-line="22" selection-end-line="22" />
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-aws-cf-terminate-application-stack.sh">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -96,12 +119,15 @@
         <option value="$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-aws-cf-terminate-stack.sh" />
         <option value="$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-aws-cf-create-stack.sh" />
         <option value="$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-cf-networking.json" />
+        <option value="$PROJECT_DIR$/appspec.yml" />
+        <option value="$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-aws-cf-create-circleci-policies.sh" />
+        <option value="$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-aws-cf-create-circleci-policies.json" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="293" />
-    <option name="y" value="47" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="270" />
+    <option name="y" value="69" />
     <option name="width" value="1400" />
     <option name="height" value="868" />
   </component>
@@ -110,6 +136,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -138,107 +165,20 @@
             <path>
               <item name="ccwebapp" type="b2602c69:ProjectViewProjectNode" />
               <item name="ccwebapp" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="infrastructure" type="462c0819:PsiDirectoryNode" />
+              <item name="aws" type="462c0819:PsiDirectoryNode" />
+              <item name="scripts" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ccwebapp" type="b2602c69:ProjectViewProjectNode" />
               <item name="ccwebapp" type="462c0819:PsiDirectoryNode" />
               <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="csye6225_assignment1" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ccwebapp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ccwebapp" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="csye6225_assignment1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ccwebapp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ccwebapp" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="csye6225_assignment1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ccwebapp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ccwebapp" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="csye6225_assignment1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ccwebapp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ccwebapp" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="csye6225_assignment1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ccwebapp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ccwebapp" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="csye6225_assignment1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="neu" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ccwebapp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ccwebapp" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="csye6225_assignment1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="neu" type="462c0819:PsiDirectoryNode" />
-              <item name="cloudassign1" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ccwebapp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ccwebapp" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="csye6225_assignment1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="neu" type="462c0819:PsiDirectoryNode" />
-              <item name="cloudassign1" type="462c0819:PsiDirectoryNode" />
-              <item name="configuration" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ccwebapp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ccwebapp" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="csye6225_assignment1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ccwebapp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ccwebapp" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="csye6225_assignment1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -279,22 +219,26 @@
       <workItem from="1562098807023" duration="270000" />
       <workItem from="1562102466744" duration="2703000" />
       <workItem from="1562112261359" duration="580000" />
+      <workItem from="1562374202970" duration="5484000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17881000" />
+    <option name="totallyTimeSpent" value="23365000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="67" y="25" width="1853" height="910" extended-state="6" />
+    <frame x="270" y="69" width="1400" height="868" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26065302" />
+      <window_info id="Web" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.35155097" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Spring" />
+      <window_info anchor="bottom" id="Java Enterprise" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -307,6 +251,7 @@
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Terminal" order="10" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
+      <window_info anchor="right" id="Bean Validation" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -317,6 +262,40 @@
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Database" order="8" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Web" order="0" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.35155097" />
+      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Designer" order="4" />
+      <window_info id="UI Designer" order="5" />
+      <window_info id="Capture Tool" order="6" />
+      <window_info id="Favorites" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Spring" order="0" />
+      <window_info anchor="bottom" id="Java Enterprise" order="1" />
+      <window_info anchor="bottom" id="Message" order="2" />
+      <window_info anchor="bottom" id="Find" order="3" />
+      <window_info anchor="bottom" id="Run" order="4" />
+      <window_info anchor="bottom" id="Debug" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="6" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="7" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="8" />
+      <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="10" />
+      <window_info anchor="bottom" id="Database Changes" order="11" />
+      <window_info anchor="bottom" id="Terminal" order="12" />
+      <window_info anchor="bottom" id="Event Log" order="13" side_tool="true" />
+      <window_info anchor="right" id="Bean Validation" order="0" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="right" id="Maven" order="6" />
+      <window_info anchor="right" id="Capture Analysis" order="7" />
+      <window_info anchor="right" id="Palette&#9;" order="8" />
+      <window_info anchor="right" id="Database" order="9" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -347,13 +326,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-aws-cf-terminate-stack.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="2" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-aws-cf-create-stack.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
@@ -361,10 +333,46 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-aws-cf-terminate-application-stack.sh">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-aws-cf-terminate-stack.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="2" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-cf-application.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-270" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-aws-cf-create-application-stack.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="28" selection-start-line="28" selection-end-line="28" />
+        <state relative-caret-position="450">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/appspec.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="37" selection-start-line="4" selection-start-column="37" selection-end-line="4" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-aws-cf-create-circleci-policies.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="33" column="65" lean-forward="true" selection-start-line="33" selection-start-column="65" selection-end-line="33" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-aws-cf-create-circleci-policies.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3945">
+          <caret line="263" column="15" lean-forward="true" selection-start-line="263" selection-start-column="15" selection-end-line="263" selection-end-column="15" />
         </state>
       </provider>
     </entry>
