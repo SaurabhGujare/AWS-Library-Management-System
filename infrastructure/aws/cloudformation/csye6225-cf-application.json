@@ -20,6 +20,40 @@
 		"BucketName":{"Type":"String"}
 	},
 	"Resources": {
+		"RoleS3FullAccess":{
+            "Type":"AWS::IAM::Role",
+            "Properties":{
+            "RoleName":"RoleS3FullAccess",
+            "AssumeRolePolicyDocument":{
+                "Version":"2012-10-17",
+                "Statement":[
+                    {
+                        "Effect":"Allow",
+                        "Principal":{
+                        "Service":[
+                            "ec2.amazonaws.com"  
+                        ]
+                        },
+                        "Action":[
+                        "sts:AssumeRole"
+                        ]
+                    }
+                ]
+			},
+			"ManagedPolicyArns":[
+                "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+            ]
+            }
+		},
+		"ProfileS3FullAccess":{
+            "Type":"AWS::IAM::InstanceProfile",
+            "Properties":{
+            "Path":"/",
+            "Roles":[
+                "RoleS3FullAccess"
+            ]
+            }
+      	},
 		"ourEC2Instance": {
 			"Type": "AWS::EC2::Instance",
 			"Properties": {
@@ -44,6 +78,9 @@
 					}
 				],
 				"KeyName" : {"Ref":"keyName"},
+				"IamInstanceProfile": {
+                    "Ref": "ProfileS3FullAccess"
+                },
 				"SecurityGroupIds" : [{
 					"Ref" : "WebServerSecurityGroup"
 				}],
