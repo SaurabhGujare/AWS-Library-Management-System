@@ -2,14 +2,14 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/openjdk:8-jdk
+      - image: circleci/openjdk:12-jdk
     steps:
       - checkout
       - run:
           name: Build Artifact
           command: |
             cd webapp
-            ./gradlew war
+            mvn package
             cd build/libs
             ls -al
             cd ../../..
