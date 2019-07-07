@@ -9,26 +9,21 @@ jobs:
     steps:
       # git pull
       - checkout
-
+      - run:
+          name: Install packages
+          command: sudo apt-get update && sudo apt-get install wget zip unzip python2.7 python-pip -y
       - run:
           name: Install awscli
           command: sudo pip install awscli
-      - run:
-          name: Download packer
-          command: |
-              wget -q https://releases.hashicorp.com/packer/1.3.4/packer_1.3.4_linux_amd64.zip
-              unzip packer*.zip
-              chmod +x packer
-      - run:
-          name: Validate Packer Template
-          command: ./packer validate ubuntu-ami-template.json
-      - run:
-          name: Build AMI
-          command: |
-                  ./packer build \
-                  -var "aws_region=${AWS_REGION}" \
-                  -var "subnet_id=${AWS_SUBNET_ID}" \
-                  ubuntu-ami-template.json
+            - run:
+                name: Build Artifact
+                command: |
+                  cd webapp/csye6225_assignment1
+                  pwd
+                  ls -al
+                  mvn clean install
+
+                  ls -al
 
 
       - run:
@@ -38,17 +33,16 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - ccwebapp-{{ checksum "pom.xml" }}
+            - csye6225_assignment1-{{ checksum "pom.xml" }}
 
       - run: mvn dependency:go-offline
 
       - save_cache:
           paths:
             - ~/.m2
-          key: ccwebapp-{{ checksum "pom.xml" }}
+          key: csye6225_assignment1-{{ checksum "pom.xml" }}
 
-      # package into a jar
-      - run: mvn clean package
+
 
       # build and push docker image to docker hub
       - run: mvn clean compile jib:build -Dimage=zarinlo/ccwebapp:$CIRCLE_BUILD_NUM
