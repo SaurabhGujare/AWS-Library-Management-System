@@ -11,9 +11,6 @@ jobs:
       - checkout
 
       - run:
-          name: Install packages
-          command: sudo apt-get update
-      - run:
           name: Install awscli
           command: sudo pip install awscli
       - run:
