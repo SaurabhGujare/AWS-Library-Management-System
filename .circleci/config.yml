@@ -12,7 +12,7 @@ jobs:
 
       - run:
           name: Install packages
-          command: sudo apt-get update && sudo apt-get install wget zip unzip -y
+          command: sudo apt-get update
       - run:
           name: Install awscli
           command: sudo pip install awscli
@@ -59,4 +59,4 @@ jobs:
       # store raw contents of src code
       - store_artifacts:
           path: target/classes
-destination: ccwebapp
+          destination: ccwebapp
