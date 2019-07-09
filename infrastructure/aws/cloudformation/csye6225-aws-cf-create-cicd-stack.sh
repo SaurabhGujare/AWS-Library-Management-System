@@ -32,7 +32,7 @@ STACK_ID=$(aws cloudformation create-stack \
   --stack-name $Stack_Name \
   --template-body file://csye6225-cf-cicd.json \
   --parameters ParameterKey="BucketName",ParameterValue=${BucketName} ParameterKey="WebAppBucket",ParameterValue=${WebAppBucket} \
-  --capabilities CAPABILITY_NAMED_IAM
+  --capabilities CAPABILITY_NAMED_IAM 
   --capabilities CAPABILITY_IAM | jq -r .StackId \
   )
 echo $STACK_ID

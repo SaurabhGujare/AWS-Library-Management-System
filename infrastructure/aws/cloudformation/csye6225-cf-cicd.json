@@ -33,7 +33,7 @@
         "Description": "Instance profile to connect with ec2",
         "Value": {
   
-          "Ref": ["EC2InstanceProfile",""]
+          "Ref": "EC2InstanceProfile"
         },
         "Export": {"Name": "IAMInstanceProfile"}
       }
