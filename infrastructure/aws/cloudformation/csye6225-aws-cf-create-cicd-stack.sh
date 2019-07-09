@@ -30,7 +30,7 @@ WebAppBucket=$(aws s3api list-buckets | jq -r '.Buckets[] | select(.Name | start
 echo "Creating stack..."
 STACK_ID=$(aws cloudformation create-stack \
   --stack-name $Stack_Name \
-  --template-body file://csye6225-aws-cf-create-circleci-policies.json \
+  --template-body file://csye6225-cf-cicd.json \
   --parameters ParameterKey="BucketName",ParameterValue=${BucketName} ParameterKey="WebAppBucket",ParameterValue=${WebAppBucket} \
   --capabilities CAPABILITY_NAMED_IAM
   --capabilities CAPABILITY_IAM | jq -r .StackId \
