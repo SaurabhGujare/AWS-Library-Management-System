@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7bebd3f8-101a-4523-906e-965ff80fb206" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-aws-cf-create-cicd-stack.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-aws-cf-terminate-cicd-stack.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-cf-cicd.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/infrastructure/aws/codedeploy/applicationStart.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/infrastructure/aws/codedeploy/applicationStop.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/appspec.yml" beforeDir="false" afterPath="$PROJECT_DIR$/appspec.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-aws-cf-create-application-stack.sh" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-aws-cf-create-application-stack.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-cf-application.json" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-cf-application.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/csye6225_assignment1/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/csye6225_assignment1/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webapp/csye6225_assignment1/src/main/java/com/neu/cloudassign1/service/AmazonClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/csye6225_assignment1/src/main/java/com/neu/cloudassign1/service/AmazonClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.circleci/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.circleci/config.yml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/webapp/csye6225_assignment1/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -45,11 +35,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.circleci/config.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" selection-start-line="7" selection-end-line="7" />
+            <state relative-caret-position="195">
+              <caret line="13" column="82" selection-start-line="13" selection-start-column="82" selection-end-line="13" selection-end-column="82" />
             </state>
           </provider>
         </entry>
@@ -81,7 +71,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-aws-cf-create-circleci-policies.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="405">
@@ -233,12 +223,12 @@
       <workItem from="1562465204481" duration="801000" />
       <workItem from="1562546865474" duration="578000" />
       <workItem from="1562612171356" duration="1638000" />
-      <workItem from="1562882173791" duration="265000" />
+      <workItem from="1562882173791" duration="1853000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="32494000" />
+    <option name="totallyTimeSpent" value="34082000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="910" extended-state="6" />
@@ -361,13 +351,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.circleci/config.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/infrastructure/aws/cloudformation/csye6225-cf-networking.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="600">
@@ -403,6 +386,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
           <caret line="27" selection-start-line="27" selection-end-line="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.circleci/config.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="82" selection-start-line="13" selection-start-column="82" selection-end-line="13" selection-end-column="82" />
         </state>
       </provider>
     </entry>

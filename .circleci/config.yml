@@ -10,8 +10,8 @@ jobs:
       # git pull
       - checkout
       - run:
-          name: Install packages
-          command: sudo apt-get update && sudo apt-get install wget zip unzip python2.7 python-pip -y
+          ame: Install packages
+            command: sudo apt-get update && sudo apt-get install wget zip unzip -y
       - run:
           name: Install awscli
           command: sudo pip install awscli
@@ -22,9 +22,7 @@ jobs:
                   pwd
                   ls -al
                   mvn clean install
-
                   ls -al
-
 
       - run:
           name: Decrpyt Secrets
