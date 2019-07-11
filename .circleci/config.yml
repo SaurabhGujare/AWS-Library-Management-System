@@ -10,8 +10,8 @@ jobs:
       # git pull
       - checkout
       - run:
-          ame: Install packages
-            command: sudo apt-get update && sudo apt-get install wget zip unzip -y
+          name: Install packages
+          command: sudo apt-get update && sudo apt-get install wget zip unzip -y
       - run:
           name: Install awscli
           command: sudo pip install awscli
