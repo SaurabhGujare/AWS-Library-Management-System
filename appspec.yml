@@ -2,11 +2,19 @@ version: 0.0
 os: linux
 
 files:             
+<<<<<<< HEAD
   - source: ./webapp/build/libs/myapp.war
+=======
+  - source: ./webapp/csye6225_assignment1/target/ROOT.war
+>>>>>>> 36759df96b24c5fd9a639368289852d2be3a41a3
     destination: /opt/tomcat/webapps
 
 hooks:
   AfterInstall:
    - location: ./afterInstall.sh
+     timeout: 180
+     runas: centos
+  ApplicationStart:
+   - location: ./applicationStart.sh
      timeout: 180
      runas: centos

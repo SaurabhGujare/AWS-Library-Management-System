@@ -41,7 +41,7 @@ public class AmazonClient implements BaseClient {
     private String clientRegion;
 
     private AmazonS3 s3Client;
-    
+
     @PostConstruct
     private void initializeAmazon() {
         this.s3Client = AmazonS3ClientBuilder.standard()

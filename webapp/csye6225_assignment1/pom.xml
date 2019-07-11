@@ -152,7 +152,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
-        <finalName>myapp</finalName>
+        <finalName>ROOT</finalName>
     </build>
 
 </project>
