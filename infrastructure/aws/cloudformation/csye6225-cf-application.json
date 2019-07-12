@@ -88,11 +88,11 @@
 													"Endpoint.Address"
 												]
 											},
-											":3306/csye6225 -Dspring_bucket_name=",
+											":3306/csye6225 -Dspring_bucket_name=csye6225-su19-",
 											{
 												"Ref":"BucketName"
 											},
-											"\"' >> setenv.sh \n"
+											".me.csye6225.com\"' >> setenv.sh \n"
 										]
 									]
 								},
