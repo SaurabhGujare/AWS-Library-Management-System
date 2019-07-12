@@ -42,6 +42,9 @@ public class AmazonClient implements BaseClient {
 
     private AmazonS3 s3Client;
 
+    public AmazonClient(){
+        System.out.println("\n\n*****Bucket is"+bucketName);
+    }
     @PostConstruct
     private void initializeAmazon() {
         this.s3Client = AmazonS3ClientBuilder.standard()
