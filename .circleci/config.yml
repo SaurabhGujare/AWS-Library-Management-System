@@ -28,6 +28,7 @@ jobs:
             pwd
             mvn -P cloud clean package
             cd target/
+            cp ROOT.war .
             ls -al
             cd ../../..
             pwd
@@ -39,7 +40,7 @@ jobs:
             ls -al
             mkdir -p codedeploy_artifact
             cp infrastructure/aws/codedeploy/*.sh .
-            zip -r csye6225-webapp-${CIRCLE_BUILD_NUM}.zip webapp/csye6225_assignment1/target/ROOT.war infrastructure/aws/codedeploy/*.sh *.yml
+            zip -r csye6225-webapp-${CIRCLE_BUILD_NUM}.zip ROOT.war infrastructure/aws/codedeploy/*.sh *.yml
             ls -al
             mv csye6225-webapp-${CIRCLE_BUILD_NUM}.zip codedeploy_artifact/
             ls -al
