@@ -2,22 +2,74 @@ version: 2
 jobs:
   build:
     docker:
+<<<<<<< HEAD
       - image: circleci/openjdk:11.0.1-jdk
 
     working_directory: ~/ccwebapp
 
+=======
+      - image: circleci/openjdk:11.0.2-stretch
+>>>>>>> 711b2726f3f8f5494bd52c60abb5e560681fe70d
     steps:
       # git pull
       - checkout
       - run:
+<<<<<<< HEAD
           name: Install packages
           command: sudo apt-get update && sudo apt-get install wget zip unzip -y
       - run:
           name: Install awscli
           command: sudo pip install awscli
+=======
+          name: Install Packages
+          command: |
+            sudo apt-get update && sudo apt-get -y install wget zip unzip python3
+            python3 --version
+      - run:
+          name: Install pip
+          command: sudo apt install python3-pip
+      - run:
+          name: Install AWS CLI
+          command: |
+            pip3 --version
+            sudo pip3 install awscli
+            aws --version
       - run:
           name: Build Artifact
           command: |
+            pwd
+            ls -al
+            cd webapp/csye6225_assignment1
+            pwd
+            mvn -P cloud clean package
+            cd target/
+            ls -al
+            cd ../../..
+            pwd
+      - run:
+          name: Zip Artifact
+          command: |
+            echo "Hello the current build number is ${CIRCLE_BUILD_NUM}"
+            pwd
+            ls -al
+            mkdir -p codedeploy_artifact
+            cp infrastructure/aws/codedeploy/*.sh .
+            zip -r csye6225-web-app-${CIRCLE_BUILD_NUM}.zip webapp/target/ROOT.war infrastructure/aws/codedeploy/*.sh *.yml
+            ls -al
+            mv csye6225-web-app-${CIRCLE_BUILD_NUM}.zip codedeploy_artifact/
+            ls -al
+            pwd
+            cd codedeploy_artifact
+            ls -al
+            pwd
+            cd ..
+            pwd
+            ls -al
+>>>>>>> 711b2726f3f8f5494bd52c60abb5e560681fe70d
+      - run:
+          name: Build Artifact
+          command: |
+<<<<<<< HEAD
                   cd webapp/csye6225_assignment1
                   pwd
                   ls -al
@@ -49,3 +101,16 @@ jobs:
       - store_artifacts:
           path: target/classes
           destination: ccwebapp
+=======
+            aws s3 sync codedeploy_artifact s3://code-deploy.gujares.me
+      - run:
+          name: Make CodeDeploy API call
+          command: |
+            echo "Hello CodeDeploy" 
+            aws deploy create-deployment --application-name csye6225-webapp \
+            --deployment-config-name CodeDeployDefault.AllAtOnce \
+            --description "CSYE6225 - CodeDeploy" \
+            --deployment-group-name csye6225-webapp-deployment \
+            --s3-location bucket=code-deploy.gujares.me,key=csye6225-webapp-${CIRCLE_BUILD_NUM}.zip,bundleType=zip \
+            --output json
+>>>>>>> 711b2726f3f8f5494bd52c60abb5e560681fe70d

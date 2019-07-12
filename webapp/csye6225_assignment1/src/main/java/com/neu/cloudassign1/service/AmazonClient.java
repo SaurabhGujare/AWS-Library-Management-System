@@ -35,10 +35,10 @@ public class AmazonClient implements BaseClient {
     private String objectKey;
 
     @Value("${spring_bucket_name}")
-    private String bucketName;
+    private String bucketName = System.getProperty("spring_bucket_name");
 
     @Value("${spring_clientRegion_name}")
-    private String clientRegion;
+    private String clientRegion = System.getProperty("spring_clientRegion_name");
 
     private AmazonS3 s3Client;
 
@@ -57,6 +57,7 @@ public class AmazonClient implements BaseClient {
         String s3Path = DIRECTORY+fileName;
 
         System.out.println("***\n\ns3Path"+s3Path+"\n\nbucketName"+bucketName);
+
 
         InputStream inputStream = null;
         try{
