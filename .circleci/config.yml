@@ -2,25 +2,10 @@ version: 2
 jobs:
   build:
     docker:
-<<<<<<< HEAD
-      - image: circleci/openjdk:11.0.1-jdk
-
-    working_directory: ~/ccwebapp
-
-=======
       - image: circleci/openjdk:11.0.2-stretch
->>>>>>> 711b2726f3f8f5494bd52c60abb5e560681fe70d
     steps:
-      # git pull
       - checkout
       - run:
-<<<<<<< HEAD
-          name: Install packages
-          command: sudo apt-get update && sudo apt-get install wget zip unzip -y
-      - run:
-          name: Install awscli
-          command: sudo pip install awscli
-=======
           name: Install Packages
           command: |
             sudo apt-get update && sudo apt-get -y install wget zip unzip python3
@@ -65,52 +50,17 @@ jobs:
             cd ..
             pwd
             ls -al
->>>>>>> 711b2726f3f8f5494bd52c60abb5e560681fe70d
       - run:
-          name: Build Artifact
+          name: Upload Artifact to S3
           command: |
-<<<<<<< HEAD
-                  cd webapp/csye6225_assignment1
-                  pwd
-                  ls -al
-                  mvn clean install
-                  ls -al
-
-      - run:
-          name: Decrpyt Secrets
-          command: openssl enc -d -aes-256-ecb -md md5 -in src/main/resources/application-cloud.properties.secrets -out src/main/resources/application-cloud.properties -k $SECRETS_KEY
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - csye6225_assignment1-{{ checksum "pom.xml" }}
-
-      - run: mvn dependency:go-offline
-
-      - save_cache:
-          paths:
-            - ~/.m2
-          key: csye6225_assignment1-{{ checksum "pom.xml" }}
-
-
-
-      # build and push docker image to docker hub
-      - run: mvn clean compile jib:build -Dimage=zarinlo/ccwebapp:$CIRCLE_BUILD_NUM
-
-      # store raw contents of src code
-      - store_artifacts:
-          path: target/classes
-          destination: ccwebapp
-=======
-            aws s3 sync codedeploy_artifact s3://code-deploy.gujares.me
+            aws s3 sync codedeploy_artifact s3://code-deploy.${BUCKET_NAME}.me
       - run:
           name: Make CodeDeploy API call
           command: |
-            echo "Hello CodeDeploy" 
+            echo "Hello CodeDeploy"
             aws deploy create-deployment --application-name csye6225-webapp \
             --deployment-config-name CodeDeployDefault.AllAtOnce \
             --description "CSYE6225 - CodeDeploy" \
             --deployment-group-name csye6225-webapp-deployment \
-            --s3-location bucket=code-deploy.gujares.me,key=csye6225-webapp-${CIRCLE_BUILD_NUM}.zip,bundleType=zip \
+            --s3-location bucket=code-deploy.${BUCKET_NAME}.me,key=csye6225-webapp-${CIRCLE_BUILD_NUM}.zip,bundleType=zip \
             --output json
->>>>>>> 711b2726f3f8f5494bd52c60abb5e560681fe70d
