@@ -58,6 +58,7 @@ jobs:
           name: Make CodeDeploy API call
           command: |
             echo "Hello CodeDeploy" 
+            aws configue
             aws deploy create-deployment --application-name csye6225-webapp \
             --deployment-config-name CodeDeployDefault.AllAtOnce \
             --description "CSYE6225 - CodeDeploy" \
