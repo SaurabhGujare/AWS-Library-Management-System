@@ -26,7 +26,7 @@ jobs:
             ls -al
             cd webapp/csye6225_assignment1
             pwd
-            mvn package -P cloud
+            mvn -P cloud clean package
             cd target/
             ls -al
             cd ../../..
