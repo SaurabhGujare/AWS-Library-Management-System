@@ -81,7 +81,7 @@
 									"Fn::Join":[
 										"",
 										[
-											"sudo echo 'JAVA_OPTS=\"-Dspring.datasource.username=csye6225master -Dspring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver -Dspring.datasource.password=csye6225password -Dspring_clientRegion_name=us-east-1 -Dspring.profiles.active=cloud -Dspring.datasource.url=jdbc:mysql://",
+											"sudo echo 'JAVA_OPTS=\"$JAVA_OPTS -Dspring.datasource.username=csye6225master -Dspring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver -Dspring.datasource.password=csye6225password -Dspring_clientRegion_name=us-east-1 -Dspring.profiles.active=cloud -Dspring.datasource.url=jdbc:mysql://",
 											{
 												"Fn::GetAtt":[
 													"MyRDSDB",
