@@ -69,7 +69,6 @@
 							"\n",
 							[
 								"#!/bin/bash -xe",
-								"sudo echo \"export CATALINA_HOME='/opt/tomcat/'\" >> ~/.bashrc",
 								"sudo systemctl start tomcat.service",
 								"sudo systemctl status tomcat.service",
 								"sudo systemctl stop tomcat.service",
