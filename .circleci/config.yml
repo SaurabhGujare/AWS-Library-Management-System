@@ -39,9 +39,9 @@ jobs:
             ls -al
             mkdir -p codedeploy_artifact
             cp infrastructure/aws/codedeploy/*.sh .
-            zip -r csye6225-web-app-${CIRCLE_BUILD_NUM}.zip webapp/target/ROOT.war infrastructure/aws/codedeploy/*.sh *.yml
+            zip -r csye6225-webapp-${CIRCLE_BUILD_NUM}.zip webapp/csye6225_assignment1/target/ROOT.war infrastructure/aws/codedeploy/*.sh *.yml
             ls -al
-            mv csye6225-web-app-${CIRCLE_BUILD_NUM}.zip codedeploy_artifact/
+            mv csye6225-webapp-${CIRCLE_BUILD_NUM}.zip codedeploy_artifact/
             ls -al
             pwd
             cd codedeploy_artifact
@@ -58,9 +58,9 @@ jobs:
           name: Make CodeDeploy API call
           command: |
             echo "Hello CodeDeploy"
-            aws deploy create-deployment --application-name csye6225-webapp \
-            --deployment-config-name CodeDeployDefault.AllAtOnce \
-            --description "CSYE6225 - CodeDeploy" \
-            --deployment-group-name csye6225-webapp-deployment \
-            --s3-location bucket=code-deploy.${BUCKET_NAME}.me,key=csye6225-webapp-${CIRCLE_BUILD_NUM}.zip,bundleType=zip \
-            --output json
+                        aws deploy create-deployment --application-name csye6225-webapp \
+                        --deployment-config-name CodeDeployDefault.AllAtOnce \
+                        --description "CSYE6225 - CodeDeploy" \
+                        --deployment-group-name csye6225-webapp-deployment \
+                        --s3-location bucket=code-deploy.${BUCKET_NAME}.me,bundleType=zip,key=csye6225-webapp-${CIRCLE_BUILD_NUM}.zip \
+                        --output json
