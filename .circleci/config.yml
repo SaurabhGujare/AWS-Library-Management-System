@@ -62,5 +62,5 @@ jobs:
             --deployment-config-name CodeDeployDefault.AllAtOnce \
             --description "CSYE6225 - CodeDeploy" \
             --deployment-group-name csye6225-webapp-deployment \
-            --s3-location bucket=code-deploy.${BUCKET_NAME}.me,key=csye6225-webapp-${CIRCLE_BUILD_NUM}.zip,bundleType=zip \
+            --s3-location bucket=code-deploy.${BUCKET_NAME}.me,bundleType=zip,key=csye6225-webapp-${CIRCLE_BUILD_NUM}.zip \
             --output json
