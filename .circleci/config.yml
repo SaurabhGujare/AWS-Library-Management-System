@@ -24,7 +24,8 @@ jobs:
           command: |
             pwd
             ls -al
-            cd webapp/
+            cd webapp/csye6225_assignment1
+            pwd
             mvn package -P cloud
             cd target/
             ls -al
