@@ -29,8 +29,6 @@ jobs:
             mvn -P cloud clean package
             cd target/
             ls -al
-            cp ROOT.war .
-            ls -al
             cd ../../..
             pwd
       - run:
