@@ -88,11 +88,11 @@
 													"Endpoint.Address"
 												]
 											},
-											":3306/csye6225 -Dspring_bucket_name=",
+											":3306/csye6225 -Dspring_bucket_name=csye6225-su19-",
 											{
 												"Ref":"BucketName"
 											},
-											"\"' >> setenv.sh \n"
+											".me.csye6225.com\"' >> setenv.sh \n"
 										]
 									]
 								},
@@ -126,18 +126,24 @@
 					"IpProtocol" : "tcp",
 					"FromPort" : "22",
 					"ToPort" : "22",
-				"CidrIp" : "0.0.0.0/0" },
+					"CidrIp" : "0.0.0.0/0" },
 				{
 					"IpProtocol" : "tcp",
 					"FromPort" : "80",
 					"ToPort" : "80",
-				"CidrIp" : "0.0.0.0/0" },
+					"CidrIp" : "0.0.0.0/0" },
 				{
 					"IpProtocol" : "tcp",
 					"FromPort" : "443",
 					"ToPort" : "443",
 					"CidrIp" : "0.0.0.0/0"
-				} ]
+				}	,
+				{
+					"IpProtocol" : "tcp",
+					"FromPort" : "8080",
+					"ToPort" : "8080",
+					"CidrIp" : "0.0.0.0/0"
+				}]
 			}
 		},
 		"AWSdynamotable": {
