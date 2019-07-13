@@ -24,6 +24,9 @@ public class FileSystemStorageServiceImplementation implements FileSystemStorage
                 .toAbsolutePath().normalize();
 
         System.out.println("\n\n**********PAth is "+PathStore+"/resources/uploads");
+        System.out.println("\n\n**********JAVA OPTS region is "+System.getProperty("spring_clientRegion_name"));
+        System.out.println("\n\n**********JAVA OPTS region is "+System.getenv("spring_clientRegion_name"));
+
         try
         {
             Files.createDirectories(this.fileStorageLocation);

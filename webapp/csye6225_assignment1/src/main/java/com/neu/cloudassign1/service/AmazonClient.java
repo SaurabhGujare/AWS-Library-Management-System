@@ -4,6 +4,7 @@ import com.amazonaws.AmazonServiceException;
 import com.amazonaws.HttpMethod;
 import com.amazonaws.SdkClientException;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
+import com.amazonaws.auth.InstanceProfileCredentialsProvider;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
@@ -12,6 +13,7 @@ import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,6 +26,7 @@ import java.net.URL;
 import java.util.Base64;
 import java.util.UUID;
 
+
 @Service
 public class AmazonClient implements BaseClient {
 
@@ -31,18 +34,21 @@ public class AmazonClient implements BaseClient {
     private static final String UNDERSCORE = "_";
     private String objectKey;
 
-    @Value("${spring.bucket.name}")
-    private String bucketName;
+    @Value("${spring_bucket_name}")
+    private String bucketName = System.getProperty("spring_bucket_name");
 
-    @Value("${spring.clientRegion.name}")
-    private String clientRegion;
+    @Value("${spring_clientRegion_name}")
+    private String clientRegion = System.getProperty("spring_clientRegion_name");
 
     private AmazonS3 s3Client;
 
+    public AmazonClient(){
+        System.out.println("\n\n*****Bucket is"+bucketName);
+    }
     @PostConstruct
     private void initializeAmazon() {
         this.s3Client = AmazonS3ClientBuilder.standard()
-                .withCredentials(new DefaultAWSCredentialsProviderChain())
+                .withCredentials(new InstanceProfileCredentialsProvider(false))
                 .build();
     }
 
@@ -54,6 +60,7 @@ public class AmazonClient implements BaseClient {
         String s3Path = DIRECTORY+fileName;
 
         System.out.println("***\n\ns3Path"+s3Path+"\n\nbucketName"+bucketName);
+
 
         InputStream inputStream = null;
         try{

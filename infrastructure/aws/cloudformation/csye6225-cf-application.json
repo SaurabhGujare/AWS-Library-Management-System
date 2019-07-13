@@ -20,6 +20,15 @@
 		"BucketName":{"Type":"String"}
 	},
 	"Resources": {
+		"CodeDeployEC2ServiceRoleInstanceProfile":{
+            "Type":"AWS::IAM::InstanceProfile",
+            "Properties":{
+            "Path":"/",
+            "Roles":[
+                "CodeDeployEC2ServiceRole"
+            ]
+            }
+      	},
 		"ourEC2Instance": {
 			"Type": "AWS::EC2::Instance",
 			"Properties": {
@@ -40,10 +49,14 @@
 				"Tags" : [
 					{
 						"Key" : "Name",
-						"Value" : {"Ref":"EC2Name"}
+						"Value" : "csye62252019"
 					}
 				],
 				"KeyName" : {"Ref":"keyName"},
+				"IamInstanceProfile": 
+				{
+                    "Ref": "CodeDeployEC2ServiceRoleInstanceProfile"
+                },
 				"SecurityGroupIds" : [{
 					"Ref" : "WebServerSecurityGroup"
 				}],
@@ -51,18 +64,52 @@
 					"Ref":"SubnetId1"
 				},
 				"UserData":{
-					"Fn::Base64":{
-						"Fn::Join":[
-							"",
+					"Fn::Base64": {
+						"Fn::Join": [
+							"\n",
 							[
-								"#!/bin/bash \n",
-								"echo export rds_mysql_endpoint=",{"Fn::GetAtt":["MyRDSDB","Endpoint.Address"]},">>/etc/profile \n",
-								"echo export rds_mysql_port=",{"Fn::GetAtt":["MyRDSDB","Endpoint.Port"]},">>/etc/profile \n",
-								"echo export rds_mysql_username='csye6225master'>>/etc/profile \n",
-								"echo export rds_mysql_password='csye6225password'>>/etc/profile \n",
-								"echo export rds_mysql_database='csye6225'>>/etc/profile \n",
-								"echo export spring_bucket_name=",{"Fn::Sub":"csye6225-su19-${BucketName}.me.csye6225.com"},">>/etc/profile \n",
-								"source /etc/profile"
+								"#!/bin/bash -xe",
+								"sudo systemctl start tomcat.service",
+								"sudo systemctl status tomcat.service",
+								"sudo systemctl stop tomcat.service",
+								"cd /opt/tomcat/bin",
+								"sudo touch setenv.sh",
+								"sudo chmod 777 setenv.sh",
+								"sudo echo '#!/bin/sh' >> setenv.sh",
+								
+								{
+									"Fn::Join":[
+										"",
+										[
+											"sudo echo 'JAVA_OPTS=\"$JAVA_OPTS -Dspring.datasource.username=csye6225master -Dspring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver -Dspring.datasource.password=csye6225password -Dspring_clientRegion_name=us-east-1 -Dspring.profiles.active=cloud -Dspring.datasource.url=jdbc:mysql://",
+											{
+												"Fn::GetAtt":[
+													"MyRDSDB",
+													"Endpoint.Address"
+												]
+											},
+											":3306/csye6225 -Dspring_bucket_name=csye6225-su19-",
+											{
+												"Ref":"BucketName"
+											},
+											".me.csye6225.com\"' >> setenv.sh \n"
+										]
+									]
+								},
+								"sudo systemctl restart tomcat.service",
+								"yum install awscli -y",
+								{
+								   "Fn::Join":[
+									  "",
+									  [
+										 "aws s3api get-object --bucket ",
+										 {
+											"Ref":"BucketName"
+										 },
+										 "--key cloudwatch-config.json /opt/aws/amazon-cloudwatch-agent/cloudwatch-config.json \n"
+									  ]
+								   ]
+								}
 							]
 						]
 					}
@@ -79,18 +126,24 @@
 					"IpProtocol" : "tcp",
 					"FromPort" : "22",
 					"ToPort" : "22",
-				"CidrIp" : "0.0.0.0/0" },
+					"CidrIp" : "0.0.0.0/0" },
 				{
 					"IpProtocol" : "tcp",
 					"FromPort" : "80",
 					"ToPort" : "80",
-				"CidrIp" : "0.0.0.0/0" },
+					"CidrIp" : "0.0.0.0/0" },
 				{
 					"IpProtocol" : "tcp",
 					"FromPort" : "443",
 					"ToPort" : "443",
 					"CidrIp" : "0.0.0.0/0"
-				} ]
+				}	,
+				{
+					"IpProtocol" : "tcp",
+					"FromPort" : "8080",
+					"ToPort" : "8080",
+					"CidrIp" : "0.0.0.0/0"
+				}]
 			}
 		},
 		"AWSdynamotable": {

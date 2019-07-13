@@ -2,17 +2,35 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/openjdk:8-jdk
+      - image: circleci/openjdk:11.0.2-stretch
     steps:
       - checkout
       - run:
+          name: Install Packages
+          command: |
+            sudo apt-get update && sudo apt-get -y install wget zip unzip python3
+            python3 --version
+      - run:
+          name: Install pip
+          command: sudo apt install python3-pip
+      - run:
+          name: Install AWS CLI
+          command: |
+            pip3 --version
+            sudo pip3 install awscli
+            aws --version
+      - run:
           name: Build Artifact
           command: |
-            cd webapp
-            ./gradlew war
-            cd build/libs
+            pwd
+            ls -al
+            cd webapp/csye6225_assignment1
+            pwd
+            mvn -P cloud clean package
+            cd target/
             ls -al
             cd ../../..
+            pwd
       - run:
           name: Zip Artifact
           command: |
@@ -21,9 +39,9 @@ jobs:
             ls -al
             mkdir -p codedeploy_artifact
             cp infrastructure/aws/codedeploy/*.sh .
-            zip -r csye6225-web-app-${CIRCLE_BUILD_NUM}.zip webapp/build/libs/ROOT.war *.sh *.yml
+            zip -r csye6225-webapp-${CIRCLE_BUILD_NUM}.zip webapp/csye6225_assignment1/target/ROOT.war infrastructure/aws/codedeploy/*.sh *.yml
             ls -al
-            mv csye6225-web-app-${CIRCLE_BUILD_NUM}.zip codedeploy_artifact/
+            mv csye6225-webapp-${CIRCLE_BUILD_NUM}.zip codedeploy_artifact/
             ls -al
             pwd
             cd codedeploy_artifact
@@ -35,8 +53,14 @@ jobs:
       - run:
           name: Upload Artifact to S3
           command: |
-            echo "Hello"
+            aws s3 sync codedeploy_artifact s3://code-deploy.${BUCKET_NAME}.me
       - run:
           name: Make CodeDeploy API call
           command: |
             echo "Hello CodeDeploy" 
+            aws deploy create-deployment --application-name csye6225-webapp \
+            --deployment-config-name CodeDeployDefault.AllAtOnce \
+            --description "CSYE6225 - CodeDeploy" \
+            --deployment-group-name csye6225-webapp-deployment \
+            --s3-location bucket=code-deploy.${BUCKET_NAME}.me,bundleType=zip,key=csye6225-webapp-${CIRCLE_BUILD_NUM}.zip \
+            --output json
