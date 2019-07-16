@@ -57,10 +57,11 @@ jobs:
       - run:
           name: Make CodeDeploy API call
           command: |
-            echo "Hello CodeDeploy" 
-            aws deploy create-deployment --application-name csye6225-webapp \
-            --deployment-config-name CodeDeployDefault.AllAtOnce \
-            --description "CSYE6225 - CodeDeploy" \
-            --deployment-group-name csye6225-webapp-deployment \
-            --s3-location bucket=code-deploy.${BUCKET_NAME}.me,bundleType=zip,key=csye6225-webapp-${CIRCLE_BUILD_NUM}.zip \
-            --output json
+            echo "Hello CodeDeploy"
+                        aws deploy create-deployment --application-name csye6225-webapp \
+                        --deployment-config-name CodeDeployDefault.AllAtOnce \
+                        --description "CSYE6225 - CodeDeploy" \
+                        --deployment-group-name csye6225-webapp-deployment \
+                        --s3-location bucket=code-deploy.${BUCKET_NAME}.me,bundleType=zip,key=csye6225-webapp-${CIRCLE_BUILD_NUM}.zip \
+                        --output json
+
