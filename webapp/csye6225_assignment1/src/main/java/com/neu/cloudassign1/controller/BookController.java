@@ -13,7 +13,6 @@ import com.neu.cloudassign1.service.BookService;
 import com.neu.cloudassign1.service.ImageService;
 import com.neu.cloudassign1.utils.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -42,7 +41,7 @@ public class BookController {
     }
 
 
-    @RequestMapping(value = "/book", method = RequestMethod.POST)
+    @RequestMapping(value = "/bookgaurao", method = RequestMethod.POST)
     public ResponseEntity createBook(@RequestBody Book book) {
 
         Map<String,String> bookMap = new HashMap<>();
@@ -62,7 +61,7 @@ public class BookController {
 
     }
 
-    @RequestMapping(value = "/book", method = RequestMethod.GET)
+    @RequestMapping(value = "/bookgaurao", method = RequestMethod.GET)
     public List<Book> findAll() {
         for(Book book: bookService.findAll()){
             //Set PresignedURL to CoverImage while returning all the books
@@ -143,7 +142,7 @@ public class BookController {
 
     }
 
-    @PostMapping("/book/{bookId}/image")
+    @PostMapping("/bookgaurao/{bookId}/image")
     public CoverImage addBookImage(@Valid @PathVariable UUID bookId, @RequestParam("file") MultipartFile file)
     {
         CoverImage image;
