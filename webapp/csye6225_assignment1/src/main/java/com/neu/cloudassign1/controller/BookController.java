@@ -41,7 +41,7 @@ public class BookController {
     }
 
 
-    @RequestMapping(value = "/bookgaurao", method = RequestMethod.POST)
+    @RequestMapping(value = "/book", method = RequestMethod.POST)
     public ResponseEntity createBook(@RequestBody Book book) {
 
         Map<String,String> bookMap = new HashMap<>();
@@ -61,7 +61,7 @@ public class BookController {
 
     }
 
-    @RequestMapping(value = "/bookgaurao", method = RequestMethod.GET)
+    @RequestMapping(value = "/book", method = RequestMethod.GET)
     public List<Book> findAll() {
         for(Book book: bookService.findAll()){
             //Set PresignedURL to CoverImage while returning all the books
@@ -142,7 +142,7 @@ public class BookController {
 
     }
 
-    @PostMapping("/bookgaurao/{bookId}/image")
+    @PostMapping("/book/{bookId}/image")
     public CoverImage addBookImage(@Valid @PathVariable UUID bookId, @RequestParam("file") MultipartFile file)
     {
         CoverImage image;
