@@ -62,7 +62,7 @@ public class BookController {
 
     }
 
-    @RequestMapping(value = "/book", method = RequestMethod.GET)
+    @RequestMapping(value = "/booksaurabh", method = RequestMethod.GET)
     public List<Book> findAll() {
         for(Book book: bookService.findAll()){
             //Set PresignedURL to CoverImage while returning all the books
