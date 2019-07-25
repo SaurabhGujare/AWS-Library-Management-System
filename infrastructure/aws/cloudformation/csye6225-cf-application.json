@@ -109,7 +109,10 @@
 										 "--key cloudwatch-config.json /opt/aws/amazon-cloudwatch-agent/cloudwatch-config.json \n"
 									  ]
 								   ]
-								}
+								},
+								"cd /etc/systemd/system",
+								"sudo systemctl start cloudwatch.service",
+                                "sudo systemctl enable cloudwatch.service"
 							]
 						]
 					}
