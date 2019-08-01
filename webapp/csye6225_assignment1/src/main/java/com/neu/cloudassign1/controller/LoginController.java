@@ -14,11 +14,7 @@ import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.neu.cloudassign1.exception.UserException;
 import com.neu.cloudassign1.model.User;
@@ -92,6 +88,35 @@ public class LoginController {
         	return new ResponseEntity(messageMap,HttpStatus.FORBIDDEN);
         }
         
+    }
+
+    @RequestMapping(value="/reset", method = RequestMethod.GET)
+    public ResponseEntity<String> resetPassword(@RequestParam("email") String email){
+
+        statsDClient.incrementCounter("endpoint.reset.http.get");
+        logger.info("generateResetToken - Start ");
+
+        Map<String,String> messageMap= new HashMap<String,String>();
+
+        try
+        {
+            User user = userService.findUserByEmail(email);
+            if(user != null)
+            {
+                userService.sendMessage(email);
+            }
+            messageMap.put("Success","Password reset email sent");
+            logger.info("generateResetToken - End ");
+            return new ResponseEntity(messageMap, HttpStatus.CREATED);
+
+        }
+        catch (Exception e)
+        {
+            logger.error("Exception in generating reset token : " + e.getMessage());
+            messageMap.put("Reset email failed",e.getMessage());
+            return new ResponseEntity(messageMap,HttpStatus.BAD_REQUEST);
+        }
+
     }
 	
 }
