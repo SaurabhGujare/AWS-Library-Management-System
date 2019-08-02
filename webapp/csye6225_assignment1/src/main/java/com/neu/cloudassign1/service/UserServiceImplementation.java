@@ -100,7 +100,7 @@ public class UserServiceImplementation implements UserService {
 
         logger.info("Sending Message - {} ", email);
 
-        String topicArn = getTopicArn("password_reset");
+        String topicArn = getTopicArn("reset_password");
         PublishRequest publishRequest = new PublishRequest(topicArn, email);
         Future<PublishResult> publishResultFuture = amazonSNSClient.publishAsync(publishRequest);
         String messageId = publishResultFuture.get().getMessageId();
