@@ -102,6 +102,9 @@ public class UserServiceImplementation implements UserService {
 
 //        String topicArn = getTopicArn("reset_password");
         PublishRequest publishRequest = new PublishRequest("arn:aws:sns:us-east-1:085536357045:reset_password", email);
+        String topicArn = getTopicArn("reset_password");
+        PublishRequest publishRequest = new PublishRequest(topicArn, email);
+
         Future<PublishResult> publishResultFuture = amazonSNSClient.publishAsync(publishRequest);
         String messageId = publishResultFuture.get().getMessageId();
 
