@@ -101,7 +101,7 @@ public class UserServiceImplementation implements UserService {
         logger.info("Sending Message - {} ", email);
 
 //        String topicArn = getTopicArn("reset_password");
-        PublishRequest publishRequest = new PublishRequest("arn:aws:sns:us-east-1:085536357045:reset_password", email);
+       // PublishRequest publishRequest = new PublishRequest("arn:aws:sns:us-east-1:085536357045:reset_password", email);
         String topicArn = getTopicArn("reset_password");
         PublishRequest publishRequest = new PublishRequest(topicArn, email);
 
