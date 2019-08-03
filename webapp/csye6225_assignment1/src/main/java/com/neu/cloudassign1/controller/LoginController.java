@@ -1,11 +1,8 @@
 package com.neu.cloudassign1.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.validation.ConstraintViolationException;
-
-
+import com.neu.cloudassign1.exception.UserException;
+import com.neu.cloudassign1.model.User;
+import com.neu.cloudassign1.service.UserService;
 import com.timgroup.statsd.StatsDClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,11 +11,15 @@ import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.neu.cloudassign1.exception.UserException;
-import com.neu.cloudassign1.model.User;
-import com.neu.cloudassign1.service.UserService;
+import javax.validation.ConstraintViolationException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 
