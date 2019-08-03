@@ -13,5 +13,5 @@ public interface UserService {
 
     public String getPassword(String email);
     public User findUserByEmail(String email);
-    public void sendMessage(String email) throws ExecutionException, InterruptedException;
+    //public void sendMessage(String email) throws ExecutionException, InterruptedException;
 }
