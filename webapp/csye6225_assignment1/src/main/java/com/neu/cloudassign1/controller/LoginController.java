@@ -103,8 +103,8 @@ public class LoginController {
     }
 
 
-    @RequestMapping(value="/reset/{email}", method = RequestMethod.POST)
-    public ResponseEntity resetPassword(@PathVariable String email){
+    @RequestMapping(value="/reset", method = RequestMethod.POST)
+    public ResponseEntity resetPassword(@RequestParam(name = "email") String email){
 
         statsDClient.incrementCounter("endpoint.reset.http.post");
         logger.info("generateResetToken - Start ");
