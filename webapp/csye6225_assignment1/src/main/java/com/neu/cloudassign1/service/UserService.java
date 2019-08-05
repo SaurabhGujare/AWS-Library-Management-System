@@ -3,8 +3,6 @@ package com.neu.cloudassign1.service;
 import com.neu.cloudassign1.exception.UserException;
 import com.neu.cloudassign1.model.User;
 
-import java.util.concurrent.ExecutionException;
-
 public interface UserService {
 
     public void saveUser(User user) throws UserException;
@@ -13,5 +11,7 @@ public interface UserService {
 
     public String getPassword(String email);
     public User findUserByEmail(String email);
-    public void sendMessage(String email) throws ExecutionException, InterruptedException;
+    public String resetPassword(String email);
+    public String getTopicArn(String topicName);
+    public String sendMessage(String email) throws java.util.concurrent.ExecutionException, java.lang.InterruptedException;
 }

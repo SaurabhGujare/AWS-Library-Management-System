@@ -18,6 +18,21 @@ import javax.validation.ConstraintViolationException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.web.server.ResponseStatusException;
+
+
 
 @RestController
 public class LoginController {
@@ -87,33 +102,30 @@ public class LoginController {
         
     }
 
-    @RequestMapping(value="/reset", method = RequestMethod.GET)
-    public ResponseEntity<String> resetPassword(@RequestParam("email") String email){
 
-        statsDClient.incrementCounter("endpoint.reset.http.get");
+    @RequestMapping(value="/reset/{email}", method = RequestMethod.POST)
+    public ResponseEntity resetPassword(@PathVariable String email){
+
+        statsDClient.incrementCounter("endpoint.reset.http.post");
         logger.info("generateResetToken - Start ");
 
         Map<String,String> messageMap= new HashMap<String,String>();
 
-        try
-        {
-            User user = userService.findUserByEmail(email);
-            if(user != null)
-            {
-                userService.sendMessage(email);
-            }
-            messageMap.put("Success","Password reset email sent");
-            logger.info("generateResetToken - End ");
-            return new ResponseEntity(messageMap, HttpStatus.CREATED);
+        try{
+            String message = userService.resetPassword(email);
+            messageMap.clear();
+            messageMap.put("message",message);
+            logger.info("Received Message : Success");
+            return new ResponseEntity(messageMap, HttpStatus.OK);
 
-        }
-        catch (Exception e)
-        {
-            logger.error("Exception in generating reset token : " + e.getMessage());
-            messageMap.put("Reset email failed",e.getMessage());
-            return new ResponseEntity(messageMap,HttpStatus.BAD_REQUEST);
+        }catch(Exception e ){
+            logger.error("Reset Password : Failed");
+            messageMap.clear();
+            messageMap.put("errorMessage","Unable to reset password");
+            return new ResponseEntity(messageMap, HttpStatus.BAD_REQUEST);
         }
 
     }
-	
+
+
 }
