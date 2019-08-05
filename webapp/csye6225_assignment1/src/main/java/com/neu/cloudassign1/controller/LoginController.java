@@ -90,33 +90,33 @@ public class LoginController {
         
     }
 
-//    @RequestMapping(value="/reset", method = RequestMethod.GET)
-//    public ResponseEntity<String> resetPassword(@RequestParam("email") String email){
-//
-//        statsDClient.incrementCounter("endpoint.reset.http.get");
-//        logger.info("generateResetToken - Start ");
-//
-//        Map<String,String> messageMap= new HashMap<String,String>();
-//
-//        try
-//        {
-//            User user = userService.findUserByEmail(email);
-//            if(user != null)
-//            {
-//                userService.sendMessage(email);
-//            }
-//            messageMap.put("Success","Password reset email sent");
-//            logger.info("generateResetToken - End ");
-//            return new ResponseEntity(messageMap, HttpStatus.CREATED);
-//
-//        }
-//        catch (Exception e)
-//        {
-//            logger.error("Exception in generating reset token : " + e.getMessage());
-//            messageMap.put("Reset email failed",e.getMessage());
-//            return new ResponseEntity(messageMap,HttpStatus.BAD_REQUEST);
-//        }
-//
-//    }
+    @RequestMapping(value="/reset", method = RequestMethod.POST, produces="application/json")
+    public ResponseEntity<String> resetPassword(@RequestParam("email") String email){
+
+        statsDClient.incrementCounter("endpoint.reset.http.post");
+        logger.info("generateResetToken - Start ");
+
+        Map<String,String> messageMap= new HashMap<String,String>();
+
+        try
+        {
+            User user = userService.findUserByEmail(email);
+            if(user != null)
+            {
+                userService.sendMessage(email);
+            }
+            messageMap.put("Success","Password reset email sent");
+            logger.info("generateResetToken - End ");
+            return new ResponseEntity(messageMap, HttpStatus.CREATED);
+
+        }
+        catch (Exception e)
+        {
+            logger.error("Exception in generating reset token : " + e.getMessage());
+            messageMap.put("Reset email failed",e.getMessage());
+            return new ResponseEntity(messageMap,HttpStatus.BAD_REQUEST);
+        }
+
+    }
 	
 }

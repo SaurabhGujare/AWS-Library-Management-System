@@ -95,43 +95,43 @@ public class UserServiceImplementation implements UserService {
         return u;
     }
 
-//    @Override
-//    public void sendMessage(String email) throws ExecutionException, InterruptedException {
-//
-//        logger.info("Sending Message - {} ", email);
-//
-//        String topicArn = getTopicArn("reset_password");
-//        PublishRequest publishRequest = new PublishRequest(topicArn, email);
-//        Future<PublishResult> publishResultFuture = amazonSNSClient.publishAsync(publishRequest);
-//        String messageId = publishResultFuture.get().getMessageId();
-//
-//        logger.info("Send Message {} with message Id {} ", email, messageId);
-//
-//    }
+    @Override
+    public void sendMessage(String email) throws ExecutionException, InterruptedException {
 
-//    public String getTopicArn(String topicName) {
-//
-//        String topicArn = null;
-//
-//        try {
-//            Topic topic = amazonSNSClient.listTopicsAsync().get().getTopics().stream()
-//                    .filter(t -> t.getTopicArn().contains(topicName)).findAny().orElse(null);
-//
-//            if (null != topic) {
-//                topicArn = topic.getTopicArn();
-//            } else {
-//                logger.info("No Topic found by the name : ", topicName);
-//            }
-//
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        } catch (ExecutionException e) {
-//            e.printStackTrace();
-//        }
-//
-//        logger.info("Arn corresponding to topic name {} is {} ", topicName, topicArn);
-//
-//        return topicArn;
-//
-//    }
+        logger.info("Sending Message - {} ", email);
+
+        String topicArn = getTopicArn("reset_password");
+        PublishRequest publishRequest = new PublishRequest(topicArn, email);
+        Future<PublishResult> publishResultFuture = amazonSNSClient.publishAsync(publishRequest);
+        String messageId = publishResultFuture.get().getMessageId();
+
+        logger.info("Send Message {} with message Id {} ", email, messageId);
+
+    }
+
+    public String getTopicArn(String topicName) {
+
+        String topicArn = null;
+
+        try {
+            Topic topic = amazonSNSClient.listTopicsAsync().get().getTopics().stream()
+                    .filter(t -> t.getTopicArn().contains(topicName)).findAny().orElse(null);
+
+            if (null != topic) {
+                topicArn = topic.getTopicArn();
+            } else {
+                logger.info("No Topic found by the name : ", topicName);
+            }
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        logger.info("Arn corresponding to topic name {} is {} ", topicName, topicArn);
+
+        return topicArn;
+
+    }
 }
