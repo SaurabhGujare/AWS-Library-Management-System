@@ -16,7 +16,7 @@ import com.amazonaws.services.sns.model.CreateTopicResult;
 import com.amazonaws.services.sns.model.ListTopicsResult;
 import com.amazonaws.services.sns.model.SubscribeRequest;
 import com.amazonaws.services.sns.model.Topic;
-
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.validation.ConstraintViolationException;
