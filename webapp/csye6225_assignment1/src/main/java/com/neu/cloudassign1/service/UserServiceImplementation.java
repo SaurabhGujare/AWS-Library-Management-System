@@ -114,8 +114,8 @@ public class UserServiceImplementation implements UserService {
         logger.info("Sending Message to topic--- {} ", emailId);
         String topicArn = getTopicArn("reset_password");
         logger.info("\n\n\nActual ARN"+topicArn);
-        logger.info("Expected arn:aws:sns:us-east-1:085536357045:reset_password");
-        PublishRequest publishRequest = new PublishRequest("arn:aws:sns:us-east-1:085536357045:reset_password", emailId);
+        logger.info("Expected arn:arn:aws:lambda:us-east-1:258900851094:function:resetPassword");
+        PublishRequest publishRequest = new PublishRequest(topicArn, emailId);
         Future<PublishResult> publishResultFuture = amazonSNSClient.publishAsync(publishRequest);
         String messageId = publishResultFuture.get().getMessageId();
         String message = "Sent Message " + emailId + " with message Id " + messageId;
