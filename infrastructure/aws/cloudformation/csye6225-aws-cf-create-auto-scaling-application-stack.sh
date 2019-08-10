@@ -16,7 +16,7 @@ export subnetId3=$(aws ec2 describe-subnets --filters "Name=vpc-id,Values=$vpcId
 echo "subnetid3 : ${subnetId3}"
 export AMI=$(aws ec2 describe-images --filters "Name=name,Values=*csye6225*" --query 'sort_by(Images, &CreationDate)[-1].ImageId' --output text)
 echo "AMI: ${AMI}"
-export DOMAIN_NAME = $(aws route53 list-hosted-zones --query 'HostedZones[0].Name' --output text)
+export DOMAIN_NAME=$(aws route53 list-hosted-zones --query 'HostedZones[0].Name' --output text)
 echo "DOMAIN NAME: ${DOMAIN_NAME}"
 export certificate_arn=$(aws acm list-certificates --query "CertificateSummaryList[0].CertificateArn" --output text)
 echo "CERTIFICATE: ${certificate_arn}"
