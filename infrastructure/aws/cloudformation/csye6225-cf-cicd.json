@@ -317,6 +317,7 @@
           "RoleName": "CodeDeployEC2ServiceRole",
           "ManagedPolicyArns":[
             "arn:aws:iam::aws:policy/AmazonS3FullAccess",
+			"arn:aws:iam::aws:policy/AmazonSNSFullAccess",
             "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy",
             "arn:aws:iam::aws:policy/CloudWatchAgentAdminPolicy"
         ]
